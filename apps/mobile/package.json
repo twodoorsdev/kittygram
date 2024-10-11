@@ -39,6 +39,9 @@
     "@reduxjs/toolkit": "*",
     "react-redux": "*",
     "react-native-unistyles": "*",
+    "@expo/vector-icons": "*",
+    "expo-image-picker": "*",
+    "expo-image": "*",
     "redux-devtools-expo-dev-plugin": "*"
   },
   "scripts": {
