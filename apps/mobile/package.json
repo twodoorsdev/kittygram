@@ -37,7 +37,8 @@
     "react-native-reanimated": "*",
     "react-native-gesture-handler": "*",
     "@reduxjs/toolkit": "*",
-    "react-redux": "*"
+    "react-redux": "*",
+    "react-native-unistyles": "*"
   },
   "scripts": {
     "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/mobile",
