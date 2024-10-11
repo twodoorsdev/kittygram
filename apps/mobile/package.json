@@ -38,7 +38,8 @@
     "react-native-gesture-handler": "*",
     "@reduxjs/toolkit": "*",
     "react-redux": "*",
-    "react-native-unistyles": "*"
+    "react-native-unistyles": "*",
+    "redux-devtools-expo-dev-plugin": "*"
   },
   "scripts": {
     "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/mobile",
