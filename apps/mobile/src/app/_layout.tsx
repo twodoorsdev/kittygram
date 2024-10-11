@@ -6,6 +6,10 @@ const NavigationLayout = () => {
   return (
     <Stack>
       <Stack.Screen name="(home)" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="modal"
+        options={{ headerShown: false, presentation: 'modal' }}
+      />
     </Stack>
   );
 };

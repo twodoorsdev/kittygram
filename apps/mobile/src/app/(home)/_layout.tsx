@@ -14,20 +14,21 @@ const TabLayout = () => {
           ),
         }}
       />
+      {/* This route is a dummy route and can't be navigated to. We only do */}
+      {/* this so we can render the "big" button */}
       <Tabs.Screen
         name="upload"
         options={{
           title: 'Upload',
-          // tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
           tabBarButton: () => <UploadButton />,
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="leaderboard"
         options={{
-          title: 'Settings',
+          title: 'Leaderboard',
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="cog" color={color} />
+            <FontAwesome size={28} name="trophy" color={color} />
           ),
         }}
       />

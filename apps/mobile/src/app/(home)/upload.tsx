@@ -1,17 +1,7 @@
-import { View, Text, StyleSheet } from 'react-native';
+// This is a dummy route, only used so that Expo Router won't complain
+// about missing routes. See `app/(home)/_layout.tsx` for more information.
+const Upload = () => {
+  return null;
+};
 
-export default function Tab() {
-  return (
-    <View style={styles.container}>
-      <Text>Tab [Home|Settings]</Text>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+export default Upload;

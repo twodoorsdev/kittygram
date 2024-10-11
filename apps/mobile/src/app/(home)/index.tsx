@@ -1,41 +1,61 @@
-import { View, Text, StyleSheet, Pressable, FlatList } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
 
 import { Card } from '../../components/Card';
 import { images } from '../../fixtures/images';
+import { useGetMyImagesQuery } from '../../store/services/CatApi';
 
-export default function Tab() {
+const NoImagesFound = () => {
   const { styles } = useStyles(stylesheet);
+  return (
+    <View style={styles.emptyListContainer}>
+      <View>
+        <Text>No images found</Text>
+      </View>
+      <Text>Imagine a vertical arrow pointing towards the + button</Text>
+    </View>
+  );
+};
+
+const ImageList = () => {
+  const { styles } = useStyles(stylesheet);
+  return (
+    <View style={styles.listContainer}>
+      <GestureHandlerRootView>
+        <FlatList
+          // style={styles.list}
+          contentContainerStyle={styles.list}
+          data={images}
+          renderItem={({ item }) => <Card item={item} />}
+          keyExtractor={(item) => item.id}
+        />
+      </GestureHandlerRootView>
+    </View>
+  );
+};
+
+const Home = () => {
+  const { styles } = useStyles(stylesheet);
+
+  const { data } = useGetMyImagesQuery();
+  const images = data ?? [];
 
   return (
     <View style={styles.container}>
-      <View style={styles.listContainer}>
-        <GestureHandlerRootView>
-          <FlatList
-            // style={styles.list}
-            contentContainerStyle={styles.list}
-            data={images}
-            renderItem={({ item }) => <Card item={item} />}
-            keyExtractor={(item) => item.id}
-          />
-        </GestureHandlerRootView>
-        {/*<Text>Tab [Home|Settings]</Text>*/}
-      </View>
-
-      <View style={styles.bottomActions}>
-        <Pressable style={styles.button}>
-          <Text>Upload new photo</Text>
-        </Pressable>
-      </View>
+      {images.length === 0 ? <NoImagesFound /> : <ImageList />}
     </View>
   );
-}
+};
 
 const stylesheet = createStyleSheet({
   container: {
     flex: 1,
     justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  emptyListContainer: {
+    justifyContent: 'center',
     alignItems: 'center',
   },
   listContainer: {
@@ -49,16 +69,11 @@ const stylesheet = createStyleSheet({
     // flex: 1,
     // width: '100%',
   },
-  bottomActions: {
-    backgroundColor: 'red',
-    paddingVertical: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-  },
   button: {
     backgroundColor: 'lightblue',
     padding: 10,
     borderRadius: 5,
   },
 });
+
+export default Home;

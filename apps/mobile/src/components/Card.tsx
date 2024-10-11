@@ -16,8 +16,6 @@ export const Card = ({ item }: CardProps) => {
   const { styles } = useStyles(stylesheet);
   const [isFavorited, setIsFavorited] = useState(false);
 
-  console.log({ item });
-
   return (
     <View style={styles.card}>
       {/*<Text>Card</Text>*/}

@@ -1,12 +1,12 @@
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function Tab() {
+const Leaderboard = () => {
   return (
     <View style={styles.container}>
       <Text>Tab [Home|Settings]</Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -15,3 +15,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+export default Leaderboard;
