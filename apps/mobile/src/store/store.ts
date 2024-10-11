@@ -1,6 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
 import devToolsEnhancer from 'redux-devtools-expo-dev-plugin';
 
+import { CatApi } from './services/CatApi';
 import { VotesSlice } from './slices/VotesSlice';
 
 export const store = configureStore({
@@ -8,10 +10,20 @@ export const store = configureStore({
     __DEV__
       ? getDefaultEnhancers().concat(devToolsEnhancer())
       : getDefaultEnhancers(),
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(
+      CatApi.middleware
+    ) as unknown as ReturnType<typeof getDefaultMiddleware>;
+  },
   reducer: {
+    // RTK-Query reducers
+    [CatApi.reducerPath]: CatApi.reducer,
+    // RTK slices
     [VotesSlice.name]: VotesSlice.reducer,
   },
 });
+
+setupListeners(store.dispatch);
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
