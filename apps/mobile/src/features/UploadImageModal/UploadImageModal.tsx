@@ -1,82 +1,76 @@
-import { ImagePickerAsset } from 'expo-image-picker';
 import { router } from 'expo-router';
-import { useCallback, useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { useCallback } from 'react';
+import { Text, View } from 'react-native';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
 
-import { Image } from '../../components/Image';
+import { ImageSource } from '../../components/ImageSource';
 import { useAppDispatch } from '../../store/overrides';
 import { useUploadImageMutation } from '../../store/services/CatApi';
 import { getPhotoLibrary } from '../../store/thunks/getPhotoLibrary';
-import { requestPhotoLibraryPermission } from '../../store/thunks/requestPhotoLibraryPermission';
 
-const Modal = () => {
-  const { styles } = useStyles(stylesheet);
+const FromCamera = () => {
+  return <ImageSource icon="camera" label="From Camera" />;
+};
+
+const FromLibrary = () => {
   const dispatch = useAppDispatch();
-
-  const [selectedImage, setSelectedImage] = useState<ImagePickerAsset>();
-
   const [uploadImageFn, { isLoading: isUpdating }] = useUploadImageMutation();
+  const handleSelectAndUpload = useCallback(async () => {
+    const response = await dispatch(getPhotoLibrary()).unwrap();
 
-  const handleSelectImage = useCallback(() => {
-    dispatch(getPhotoLibrary())
-      .unwrap()
-      .then((r) => {
-        if (Array.isArray(r.assets)) {
-          setSelectedImage(r.assets[0]);
-        }
-      });
-  }, [dispatch]);
-
-  const handleUpload = useCallback(async () => {
-    if (!selectedImage) {
-      return;
+    if (!Array.isArray(response.assets)) {
+      // @TODO Handle this better
+      throw new Error('No images found');
     }
 
-    uploadImageFn(selectedImage)
-      .unwrap()
-      .then(() => {
-        router.back();
-      });
-  }, [selectedImage, uploadImageFn]);
+    if (response.assets.length > 1) {
+      // @TODO Handle this better
+      throw new Error('More than one image found');
+    }
+
+    const [firstImage] = response.assets;
+
+    await uploadImageFn(firstImage).unwrap();
+    router.back();
+  }, [dispatch, uploadImageFn]);
 
   return (
-    <View style={styles.content}>
-      <Text style={styles.contentTitle}>Hi 👋!</Text>
-      <Text>Hello from Overlay!</Text>
+    <ImageSource
+      icon="images"
+      label="From Photos"
+      onPress={handleSelectAndUpload}
+    />
+  );
+};
 
-      <Pressable onPress={() => dispatch(requestPhotoLibraryPermission())}>
-        <Text>Get permission to photo library</Text>
-      </Pressable>
-
-      <Pressable onPress={handleSelectImage}>
-        <Text>Get photo library</Text>
-      </Pressable>
-
-      <Pressable onPress={() => router.back()}>
-        <Text>Close</Text>
-      </Pressable>
-
-      {selectedImage ? (
-        <>
-          <Image style={styles.image} source={selectedImage.uri} />
-          <Pressable onPress={handleUpload}>
-            <Text>Upload?</Text>
-          </Pressable>
-        </>
-      ) : null}
+export const UploadImageModal = () => {
+  const { styles } = useStyles(stylesheet);
+  return (
+    <View style={styles.root}>
+      <View style={styles.title}>
+        <Text style={styles.contentTitle}>Hi 👋!</Text>
+        <Text>Hello from Overlay!</Text>
+      </View>
+      <View style={styles.content}>
+        <FromCamera />
+        <FromLibrary />
+      </View>
     </View>
   );
 };
 
-const stylesheet = createStyleSheet({
-  content: {
+const stylesheet = createStyleSheet((theme) => ({
+  root: {
+    height: '100%',
     backgroundColor: 'white',
     padding: 22,
-    justifyContent: 'center',
-    alignItems: 'center',
     borderTopRightRadius: 17,
     borderTopLeftRadius: 17,
+  },
+  title: {},
+  content: {
+    flex: 1,
+    rowGap: 8,
   },
   contentTitle: {
     fontSize: 20,
@@ -88,6 +82,4 @@ const stylesheet = createStyleSheet({
     height: 200,
     backgroundColor: 'red',
   },
-});
-
-export default Modal;
+}));

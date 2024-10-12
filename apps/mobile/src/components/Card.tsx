@@ -1,3 +1,4 @@
+import { FontAwesome5 } from '@expo/vector-icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useCallback, useMemo, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
@@ -40,6 +41,13 @@ export const ImageOverlay = ({ item }: CardProps) => {
           size={24}
           color="red"
         />
+      </Pressable>
+      <Pressable
+        style={styles.favorite}
+        // onPress={() => setIsFavorited((prevState) => !prevState)}
+        onPress={handlePress}
+      >
+        <FontAwesome5 name="trash" size={24} color="black" />
       </Pressable>
     </View>
   );
@@ -143,17 +151,14 @@ const stylesheet = createStyleSheet({
     right: 0,
   },
   favorite: {
-    // position: 'absolute',
-    // right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'white',
     opacity: 0.5,
     borderRadius: 100,
     margin: 8,
     padding: 16,
     flex: 1,
-    // height: '100%',
-    // width: '100%',
-    // backgroundColor: 'blue',
   },
   image: {
     // flex: 1,

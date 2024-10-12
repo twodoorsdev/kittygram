@@ -1,4 +1,4 @@
-import UploadImageModal from '../features/UploadImageModal/UploadImageModal';
+import { UploadImageModal } from '../features/UploadImageModal/UploadImageModal';
 
 const Modal = () => {
   return <UploadImageModal />;
