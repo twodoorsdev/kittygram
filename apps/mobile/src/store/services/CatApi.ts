@@ -58,20 +58,17 @@ export const CatApi = createApi({
     getMyImages: build.query<ApiImage[], { limit?: number; page?: number }>({
       // The API defaults to `limit=1`, which is ridiculous so we re-set it to 10 here.
       query: ({ page = 0, limit = 10 }) => `images?page=${page}&limit=${limit}`,
-      providesTags: (result) =>
-        (result ?? []).map(({ id }) => ({ type: 'Image', id })),
+      providesTags: ['Image'],
     }),
 
     getMyFavourites: build.query<ApiFavourite[], void>({
       query: () => `favourites`,
-      providesTags: (result) =>
-        (result ?? []).map(({ id }) => ({ type: 'Favourite', id })),
+      providesTags: ['Favourite'],
     }),
 
     getMyVotes: build.query<ApiVote[], void>({
       query: () => `votes`,
-      providesTags: (result) =>
-        (result ?? []).map(({ id }) => ({ type: 'Vote', id })),
+      providesTags: ['Vote'],
     }),
 
     uploadImage: build.mutation<ApiImage, ImagePickerAsset>({
@@ -113,9 +110,8 @@ export const CatApi = createApi({
           },
         };
       },
-      invalidatesTags: (response, _, originalId) => [
-        { type: 'Favourite', id: response?.id ?? originalId },
-      ],
+
+      invalidatesTags: ['Favourite'],
     }),
 
     unfavouriteImage: build.mutation<{ id: number; message: string }, number>({
@@ -125,9 +121,7 @@ export const CatApi = createApi({
           method: 'DELETE',
         };
       },
-      invalidatesTags: (response, _, originalId) => [
-        { type: 'Favourite', id: response?.id ?? originalId },
-      ],
+      invalidatesTags: ['Favourite'],
     }),
 
     upvoteImage: build.mutation<void, string>({
@@ -165,9 +159,7 @@ export const CatApi = createApi({
           method: 'DELETE',
         };
       },
-      invalidatesTags: (_, __, originalId) => [
-        { type: 'Image', id: originalId },
-      ],
+      invalidatesTags: ['Image'],
     }),
   }),
 });
@@ -176,6 +168,7 @@ export const {
   endpoints,
   useGetMyImagesQuery,
   useGetMyFavouritesQuery,
+  useLazyGetMyFavouritesQuery,
   useGetMyVotesQuery,
   useFavouriteImageMutation,
   useUnfavouriteImageMutation,

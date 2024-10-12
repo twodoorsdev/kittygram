@@ -28,6 +28,7 @@ const stylesheet = createStyleSheet((theme) => ({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    borderStyle: 'dashed',
     borderWidth: 1,
     borderRadius: 10,
     // padding: 32,

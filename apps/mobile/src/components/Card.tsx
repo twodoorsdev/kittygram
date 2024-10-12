@@ -39,8 +39,6 @@ export const ImageOverlay = ({ item }: CardProps) => {
     deleteMutationFn(item.id);
   }, [deleteMutationFn, item.id]);
 
-  console.log({ a: item.favourite });
-
   return (
     <View style={styles.overlay}>
       <Pressable
@@ -176,7 +174,7 @@ const stylesheet = createStyleSheet({
     // flex: 1,
     width: '100%',
     height: 200,
-    backgroundColor: 'red',
+    backgroundColor: 'white',
   },
   voteActions: {
     flexDirection: 'row',

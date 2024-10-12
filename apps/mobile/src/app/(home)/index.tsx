@@ -1,58 +1,13 @@
-import { useFocusEffect } from 'expo-router';
-import { useCallback, useMemo } from 'react';
-import { View, Text, FlatList } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { View } from 'react-native';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
-import { useSelector } from 'react-redux';
-
-import { Card } from '../../components/Card';
-import { getEnhancedImageList } from '../../store/selectors/getEnhancedImageList';
+import { ImageList } from '../../features/HomePage/ImageList';
+import { NoImagesFound } from '../../features/HomePage/NoImagesFound';
 
 import {
-  ApiFavourite,
-  ApiImage,
-  ApiVote,
   useGetMyFavouritesQuery,
   useGetMyImagesQuery,
   useGetMyVotesQuery,
 } from '../../store/services/CatApi';
-
-const NoImagesFound = () => {
-  const { styles } = useStyles(stylesheet);
-  return (
-    <View style={styles.emptyListContainer}>
-      <View>
-        <Text>No images found</Text>
-      </View>
-      <Text>Imagine a vertical arrow pointing towards the + button</Text>
-    </View>
-  );
-};
-
-export type ImageListProps = {
-  favourites: ApiFavourite[];
-  images: ApiImage[];
-  votes: ApiVote[];
-};
-
-const ImageList = ({ favourites, images, votes }: ImageListProps) => {
-  const { styles } = useStyles(stylesheet);
-  const memoizedImages = useSelector(getEnhancedImageList);
-
-  return (
-    <View style={styles.listContainer}>
-      <GestureHandlerRootView>
-        <FlatList
-          // style={styles.list}
-          contentContainerStyle={styles.list}
-          data={memoizedImages}
-          renderItem={({ item }) => <Card item={item} />}
-          keyExtractor={(item) => item.id}
-        />
-      </GestureHandlerRootView>
-    </View>
-  );
-};
 
 const Home = () => {
   const { styles } = useStyles(stylesheet);
@@ -75,11 +30,7 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      {images.length === 0 ? (
-        <NoImagesFound />
-      ) : (
-        <ImageList favourites={favourites} images={images} votes={votes} />
-      )}
+      {images.length === 0 ? <NoImagesFound /> : <ImageList />}
     </View>
   );
 };
@@ -89,21 +40,6 @@ const stylesheet = createStyleSheet({
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  emptyListContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  listContainer: {
-    // flex: 1,
-    // backgroundColor: 'blue',
-    width: '100%',
-    height: '100%',
-  },
-  list: {
-    // rowGap: 10,
-    // flex: 1,
-    // width: '100%',
   },
   button: {
     backgroundColor: 'lightblue',
