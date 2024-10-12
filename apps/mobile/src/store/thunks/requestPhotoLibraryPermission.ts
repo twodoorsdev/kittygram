@@ -19,9 +19,7 @@ export const requestPhotoLibraryPermission = createAppAsyncThunk(
     );
 
     if (updatedState.status !== 'granted') {
-      // console.error(updatedState);
       return Promise.reject(updatedState);
-      // throw new Error('Permission not granted');
     }
 
     return updatedState;

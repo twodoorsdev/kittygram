@@ -2,10 +2,10 @@ import * as ImagePicker from 'expo-image-picker';
 
 import { createAppAsyncThunk } from '../overrides';
 
-export const getPhotoLibrary = createAppAsyncThunk(
-  'photos/getLibrary',
+export const launchNativeCamera = createAppAsyncThunk(
+  'photos/launchNativeCamera',
   async () => {
-    return ImagePicker.launchImageLibraryAsync({
+    return ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       // allowsEditing: true,
       // aspect: [4, 3],/
