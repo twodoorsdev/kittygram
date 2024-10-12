@@ -6,6 +6,7 @@ import { createStyleSheet, useStyles } from 'react-native-unistyles';
 
 import { Image } from '../components/Image';
 import { useAppDispatch } from '../store/overrides';
+import { CatApi, useUploadImageMutation } from '../store/services/CatApi';
 import { getPhotoLibrary } from '../store/thunks/getPhotoLibrary';
 import { requestPhotoLibraryPermission } from '../store/thunks/requestPhotoLibraryPermission';
 
@@ -14,6 +15,8 @@ const Modal = () => {
   const dispatch = useAppDispatch();
 
   const [selectedImage, setSelectedImage] = useState<ImagePickerAsset>();
+
+  const [uploadImageFn, { isLoading: isUpdating }] = useUploadImageMutation();
 
   const handleSelectImage = useCallback(() => {
     dispatch(getPhotoLibrary())
@@ -25,7 +28,13 @@ const Modal = () => {
       });
   }, [dispatch]);
 
-  console.log({ selectedImage });
+  const handleUpload = useCallback(async () => {
+    if (!selectedImage) {
+      return;
+    }
+
+    uploadImageFn(selectedImage);
+  }, [selectedImage, uploadImageFn]);
 
   return (
     <View style={styles.content}>
@@ -45,12 +54,12 @@ const Modal = () => {
       </Pressable>
 
       {selectedImage ? (
-        <Image
-          style={styles.image}
-          source={selectedImage.uri}
-          // source="https://picsum.photos/seed/696/3000/2000"
-          // placeholder={{ blurhash }}
-        />
+        <>
+          <Image style={styles.image} source={selectedImage.uri} />
+          <Pressable onPress={handleUpload}>
+            <Text>Upload?</Text>
+          </Pressable>
+        </>
       ) : null}
     </View>
   );

@@ -18,7 +18,7 @@ const NoImagesFound = () => {
   );
 };
 
-const ImageList = () => {
+const ImageList = ({ images }) => {
   const { styles } = useStyles(stylesheet);
   return (
     <View style={styles.listContainer}>
@@ -37,13 +37,11 @@ const ImageList = () => {
 
 const Home = () => {
   const { styles } = useStyles(stylesheet);
-
-  const { data } = useGetMyImagesQuery();
-  const images = data ?? [];
+  const { data = [] } = useGetMyImagesQuery({});
 
   return (
     <View style={styles.container}>
-      {images.length === 0 ? <NoImagesFound /> : <ImageList />}
+      {images.length === 0 ? <NoImagesFound /> : <ImageList images={data} />}
     </View>
   );
 };
