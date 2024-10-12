@@ -13,10 +13,12 @@ export const UploadButton = () => {
 
   return (
     <Pressable style={styles.root} onPress={handlePress}>
-      <View style={styles.leftEar}></View>
-      <View style={styles.rightEar}></View>
-      <View style={styles.button}>
-        <FontAwesome size={28} name="camera" color="white" />
+      <View>
+        <View style={styles.leftEar}></View>
+        <View style={styles.rightEar}></View>
+        <View style={styles.button}>
+          <FontAwesome size={28} name="camera" color="white" />
+        </View>
       </View>
     </Pressable>
   );
@@ -24,13 +26,9 @@ export const UploadButton = () => {
 
 const stylesheet = createStyleSheet({
   root: {
-    // height: 90,
-    // width: 90,
-    // backgroundColor: 'white',
-    // borderRadius: 100,
-    // marginVertical: -45,
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   leftEar: {
     position: 'absolute',
