@@ -3,7 +3,6 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import devToolsEnhancer from 'redux-devtools-expo-dev-plugin';
 
 import { CatApi } from './services/CatApi';
-import { VotesSlice } from './slices/VotesSlice';
 
 export const store = configureStore({
   enhancers: (getDefaultEnhancers) =>
@@ -18,8 +17,6 @@ export const store = configureStore({
   reducer: {
     // RTK-Query reducers
     [CatApi.reducerPath]: CatApi.reducer,
-    // RTK slices
-    [VotesSlice.name]: VotesSlice.reducer,
   },
 });
 

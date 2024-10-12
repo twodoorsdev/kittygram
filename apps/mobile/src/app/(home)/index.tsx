@@ -64,6 +64,7 @@ const Home = () => {
 
   // console.log({ images, votes });
 
+  // Ensures that images and votes are refreshed when the screen is focused
   useFocusEffect(
     useCallback(() => {
       refetchImages();
