@@ -42,7 +42,8 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "The app accesses your photos to let you share them with your friends."
+          "cameraPermission": "The app accesses your camera to let you take photos of your cats.",
+          "photosPermission": "The app accesses your photos to let you upload your cats."
         }
       ]
     ]
