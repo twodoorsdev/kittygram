@@ -10,7 +10,9 @@ export const FromCamera = () => {
   const dispatch = useAppDispatch();
   const [uploadImageFn, { isLoading: isUpdating }] = useUploadImageMutation();
   const handleSelectAndUpload = useCallback(async () => {
+    // @ts-expect-error Thunk does not need any parameters
     await dispatch(requestCameraPermission());
+    // @ts-expect-error Thunk does not need any parameters
     const response = await dispatch(launchNativeCamera()).unwrap();
 
     if (!Array.isArray(response.assets)) {

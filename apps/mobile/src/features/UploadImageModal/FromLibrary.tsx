@@ -11,7 +11,9 @@ export const FromLibrary = () => {
   const dispatch = useAppDispatch();
   const [uploadImageFn, { isLoading: isUpdating }] = useUploadImageMutation();
   const handleSelectAndUpload = useCallback(async () => {
+    // @ts-expect-error Thunk does not need any parameters
     await dispatch(requestPhotoLibraryPermission());
+    // @ts-expect-error Thunk does not need any parameters
     const response = await dispatch(launchNativePhotoPicker()).unwrap();
 
     if (!Array.isArray(response.assets)) {

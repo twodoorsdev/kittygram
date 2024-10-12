@@ -4,7 +4,7 @@ import { createAppAsyncThunk } from '../overrides';
 
 export const requestCameraPermission = createAppAsyncThunk(
   'photos/requestPermission',
-  async () => {
+  async ({ foo }: { foo: boolean }) => {
     const currentState = await ImagePicker.getCameraPermissionsAsync();
 
     if (currentState.status === 'granted') {

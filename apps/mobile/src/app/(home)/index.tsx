@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
 import { ImageList } from '../../features/HomePage/ImageList';
 import { NoImagesFound } from '../../features/HomePage/NoImagesFound';
@@ -11,25 +11,17 @@ import {
 
 const Home = () => {
   const { styles } = useStyles(stylesheet);
-  const { data: images = [], refetch: refetchImages } = useGetMyImagesQuery({});
-  const { data: favourites = [], refetch: refetchFavourites } =
-    useGetMyFavouritesQuery();
-  const { data: votes = [], refetch: refetchVotes } = useGetMyVotesQuery();
+  const { data: images = [], isLoading: isImagesLoading } = useGetMyImagesQuery(
+    {}
+  );
+  const { isLoading: isFavouritesLoading } = useGetMyFavouritesQuery();
+  const { isLoading: isVotesLoading } = useGetMyVotesQuery();
 
-  // console.log({ favourites, images, votes });
-  // console.log({ favourites });
-
-  // Ensures that images and votes are refreshed when the screen is focused
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     refetchImages();
-  //     refetchFavourites();
-  //     refetchVotes();
-  //   }, [refetchFavourites, refetchImages, refetchVotes])
-  // );
+  const isLoading = isImagesLoading || isFavouritesLoading || isVotesLoading;
 
   return (
     <View style={styles.container}>
+      {isLoading && <ActivityIndicator size="large" color="blue" />}
       {images.length === 0 ? <NoImagesFound /> : <ImageList />}
     </View>
   );

@@ -1,19 +1,14 @@
 import { FlatList, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
-import { useSelector } from 'react-redux';
 
-import { Card } from '../../components/Card';
+import { CatCard } from '../CatCard/CatCard';
+import { useAppSelector } from '../../store/overrides';
 import { getEnhancedImageList } from '../../store/selectors/getEnhancedImageList';
-import { useGetMyFavouritesQuery } from '../../store/services/CatApi';
 
 export const ImageList = () => {
   const { styles } = useStyles(stylesheet);
-  const memoizedImages = useSelector(getEnhancedImageList);
-  // const [queryFn, { isLoading, data, error }] = useLazyGetMyFavouritesQuery();
-
-  const { data: favourites = [], refetch: refetchFavourites } =
-    useGetMyFavouritesQuery();
+  const memoizedImages = useAppSelector(getEnhancedImageList);
 
   return (
     <View style={styles.root}>
@@ -22,7 +17,7 @@ export const ImageList = () => {
           // style={styles.list}
           contentContainerStyle={styles.list}
           data={memoizedImages}
-          renderItem={({ item }) => <Card item={item} />}
+          renderItem={({ item }) => <CatCard item={item} />}
           keyExtractor={(item) => item.id}
         />
       </GestureHandlerRootView>
@@ -32,14 +27,8 @@ export const ImageList = () => {
 
 const stylesheet = createStyleSheet((theme) => ({
   root: {
-    // flex: 1,
-    // backgroundColor: 'blue',
     width: '100%',
     height: '100%',
   },
-  list: {
-    // rowGap: 10,
-    // flex: 1,
-    // width: '100%',
-  },
+  list: {},
 }));

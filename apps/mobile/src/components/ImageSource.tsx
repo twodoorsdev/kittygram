@@ -31,6 +31,5 @@ const stylesheet = createStyleSheet((theme) => ({
     borderStyle: 'dashed',
     borderWidth: 1,
     borderRadius: 10,
-    // padding: 32,
   },
 }));
