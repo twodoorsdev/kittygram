@@ -33,7 +33,11 @@ const Modal = () => {
       return;
     }
 
-    uploadImageFn(selectedImage);
+    uploadImageFn(selectedImage)
+      .unwrap()
+      .then(() => {
+        router.back();
+      });
   }, [selectedImage, uploadImageFn]);
 
   return (
