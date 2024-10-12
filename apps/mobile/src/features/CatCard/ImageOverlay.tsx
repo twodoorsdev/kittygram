@@ -1,7 +1,7 @@
 import { FontAwesome5 } from '@expo/vector-icons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useCallback } from 'react';
-import { Pressable, View } from 'react-native';
+import { Alert, Pressable, View } from 'react-native';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
 import {
   useDeleteImageMutation,
@@ -26,7 +26,16 @@ export const ImageOverlay = ({ item }: CardProps) => {
   }, [favouriteMutationFn, item, unfavouriteMutationFn]);
 
   const handleDelete = useCallback(() => {
-    deleteMutationFn(item.id);
+    Alert.alert('Delete', 'Are you sure you want to delete this image?', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Delete',
+        onPress: () => deleteMutationFn(item.id),
+      },
+    ]);
   }, [deleteMutationFn, item.id]);
 
   return (
