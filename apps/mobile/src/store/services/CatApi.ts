@@ -19,6 +19,16 @@ export type ApiImage = {
   categories: [];
 };
 
+export type ApiVote = {
+  id: number;
+  image_id: string;
+  sub_id: string;
+  created_at: string;
+  value: number;
+  country_code: string;
+  image: ApiImage;
+};
+
 export const CatApi = createApi({
   reducerPath: 'catsApi',
   baseQuery: fetchBaseQuery({
@@ -34,13 +44,19 @@ export const CatApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Images'],
+  tagTypes: ['Image', 'Vote'],
   endpoints: (build) => ({
     getMyImages: build.query<ApiImage[], { limit?: number; page?: number }>({
       // The API defaults to `limit=1`, which is ridiculous so we re-set it to 10 here.
       query: ({ page = 0, limit = 10 }) => `images?page=${page}&limit=${limit}`,
       providesTags: (result) =>
-        (result ?? []).map(({ id }) => ({ type: 'Images', id })),
+        (result ?? []).map(({ id }) => ({ type: 'Image', id })),
+    }),
+
+    getMyVotes: build.query<ApiVote[], void>({
+      query: () => `votes`,
+      providesTags: (result) =>
+        (result ?? []).map(({ id }) => ({ type: 'Vote', id })),
     }),
 
     uploadImage: build.mutation<ApiImage, ImagePickerAsset>({
@@ -54,7 +70,6 @@ export const CatApi = createApi({
           type: image.type,
           name: image.fileName,
         } as unknown as Blob);
-        body.append('sub_id', image.fileName ?? Math.random().toString());
 
         return {
           url: 'images/upload',
@@ -70,7 +85,35 @@ export const CatApi = createApi({
       //   console.log({ baseQueryReturnValue, meta, arg });
       //   return baseQueryReturnValue.data;
       // },
-      invalidatesTags: ['Images'],
+      invalidatesTags: ['Image'],
+    }),
+
+    upvoteImage: build.mutation<void, string>({
+      query: (id) => {
+        return {
+          url: `votes`,
+          method: 'POST',
+          body: {
+            image_id: id,
+            value: 1,
+          },
+        };
+      },
+      invalidatesTags: ['Vote'],
+    }),
+
+    downvoteImage: build.mutation<void, string>({
+      query: (id) => {
+        return {
+          url: `votes`,
+          method: 'POST',
+          body: {
+            image_id: id,
+            value: -1,
+          },
+        };
+      },
+      invalidatesTags: ['Vote'],
     }),
 
     deleteImage: build.mutation<void, string>({
@@ -81,11 +124,18 @@ export const CatApi = createApi({
         };
       },
       invalidatesTags: (_, __, originalId) => [
-        { type: 'Images', id: originalId },
+        { type: 'Image', id: originalId },
       ],
     }),
   }),
 });
 
-export const { endpoints, useGetMyImagesQuery, useUploadImageMutation } =
-  CatApi;
+export const {
+  endpoints,
+  useGetMyImagesQuery,
+  useGetMyVotesQuery,
+  useUpvoteImageMutation,
+  useDownvoteImageMutation,
+  useDeleteImageMutation,
+  useUploadImageMutation,
+} = CatApi;

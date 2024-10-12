@@ -1,10 +1,17 @@
+import { useFocusEffect } from 'expo-router';
+import { useCallback, useMemo } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
 
 import { Card } from '../../components/Card';
-import { images } from '../../fixtures/images';
-import { useGetMyImagesQuery } from '../../store/services/CatApi';
+
+import {
+  ApiImage,
+  ApiVote,
+  useGetMyImagesQuery,
+  useGetMyVotesQuery,
+} from '../../store/services/CatApi';
 
 const NoImagesFound = () => {
   const { styles } = useStyles(stylesheet);
@@ -18,15 +25,30 @@ const NoImagesFound = () => {
   );
 };
 
-const ImageList = ({ images }) => {
+export type ImageListProps = {
+  images: ApiImage[];
+  votes: ApiVote[];
+};
+
+const ImageList = ({ images, votes }: ImageListProps) => {
   const { styles } = useStyles(stylesheet);
+
+  const imagesWithVotes = useMemo(() => {
+    return images.map((image) => {
+      return {
+        ...image,
+        votes: votes.filter((vote) => vote.image_id === image.id),
+      };
+    });
+  }, [images, votes]);
+
   return (
     <View style={styles.listContainer}>
       <GestureHandlerRootView>
         <FlatList
           // style={styles.list}
           contentContainerStyle={styles.list}
-          data={images}
+          data={imagesWithVotes}
           renderItem={({ item }) => <Card item={item} />}
           keyExtractor={(item) => item.id}
         />
@@ -37,11 +59,25 @@ const ImageList = ({ images }) => {
 
 const Home = () => {
   const { styles } = useStyles(stylesheet);
-  const { data = [] } = useGetMyImagesQuery({});
+  const { data: images = [], refetch: refetchImages } = useGetMyImagesQuery({});
+  const { data: votes = [], refetch: refetchVotes } = useGetMyVotesQuery();
+
+  // console.log({ images, votes });
+
+  useFocusEffect(
+    useCallback(() => {
+      refetchImages();
+      refetchVotes();
+    }, [refetchImages, refetchVotes])
+  );
 
   return (
     <View style={styles.container}>
-      {images.length === 0 ? <NoImagesFound /> : <ImageList images={data} />}
+      {images.length === 0 ? (
+        <NoImagesFound />
+      ) : (
+        <ImageList images={images} votes={votes} />
+      )}
     </View>
   );
 };
