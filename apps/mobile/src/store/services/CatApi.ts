@@ -22,11 +22,20 @@ export type ApiImage = {
 export type ApiVote = {
   id: number;
   image_id: string;
-  sub_id: string;
+  sub_id?: string;
   created_at: string;
   value: number;
   country_code: string;
-  image: ApiImage;
+  image: Pick<ApiImage, 'id' | 'url'>;
+};
+
+export type ApiFavourite = {
+  id: number;
+  user_id: string;
+  image_id: string;
+  sub_id?: string;
+  created_at: string;
+  image: Pick<ApiImage, 'id' | 'url'>;
 };
 
 export const CatApi = createApi({
@@ -44,13 +53,19 @@ export const CatApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Image', 'Vote'],
+  tagTypes: ['Favourite', 'Image', 'Vote'],
   endpoints: (build) => ({
     getMyImages: build.query<ApiImage[], { limit?: number; page?: number }>({
       // The API defaults to `limit=1`, which is ridiculous so we re-set it to 10 here.
       query: ({ page = 0, limit = 10 }) => `images?page=${page}&limit=${limit}`,
       providesTags: (result) =>
         (result ?? []).map(({ id }) => ({ type: 'Image', id })),
+    }),
+
+    getMyFavourites: build.query<ApiFavourite[], void>({
+      query: () => `favourites`,
+      providesTags: (result) =>
+        (result ?? []).map(({ id }) => ({ type: 'Favourite', id })),
     }),
 
     getMyVotes: build.query<ApiVote[], void>({
@@ -86,6 +101,33 @@ export const CatApi = createApi({
       //   return baseQueryReturnValue.data;
       // },
       invalidatesTags: ['Image'],
+    }),
+
+    favouriteImage: build.mutation<{ id: number; message: string }, string>({
+      query: (id) => {
+        return {
+          url: `favourites`,
+          method: 'POST',
+          body: {
+            image_id: id,
+          },
+        };
+      },
+      invalidatesTags: (response, _, originalId) => [
+        { type: 'Favourite', id: response?.id ?? originalId },
+      ],
+    }),
+
+    unfavouriteImage: build.mutation<{ id: number; message: string }, number>({
+      query: (id) => {
+        return {
+          url: `favourites/${id}`,
+          method: 'DELETE',
+        };
+      },
+      invalidatesTags: (response, _, originalId) => [
+        { type: 'Favourite', id: response?.id ?? originalId },
+      ],
     }),
 
     upvoteImage: build.mutation<void, string>({
@@ -133,7 +175,10 @@ export const CatApi = createApi({
 export const {
   endpoints,
   useGetMyImagesQuery,
+  useGetMyFavouritesQuery,
   useGetMyVotesQuery,
+  useFavouriteImageMutation,
+  useUnfavouriteImageMutation,
   useUpvoteImageMutation,
   useDownvoteImageMutation,
   useDeleteImageMutation,

@@ -4,40 +4,52 @@ import { useCallback, useMemo, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
 
-import { useAppDispatch } from '../store/overrides';
 import {
+  ApiFavourite,
   ApiImage,
   ApiVote,
   useDeleteImageMutation,
   useDownvoteImageMutation,
+  useFavouriteImageMutation,
+  useUnfavouriteImageMutation,
   useUpvoteImageMutation,
 } from '../store/services/CatApi';
 import { Image } from './Image';
 
 export type CardProps = {
-  item: ApiImage & { votes?: ApiVote[] };
+  item: ApiImage & { favourite?: ApiFavourite; votes?: ApiVote[] };
 };
 
 export const ImageOverlay = ({ item }: CardProps) => {
   const { styles } = useStyles(stylesheet);
-  const [isFavorited, setIsFavorited] = useState(false);
+
+  const [favouriteMutationFn] = useFavouriteImageMutation();
+  const [unfavouriteMutationFn] = useUnfavouriteImageMutation();
 
   const [deleteMutationFn, { isLoading, data, error }] =
     useDeleteImageMutation();
 
-  const handlePress = useCallback(() => {
+  const handleFavourite = useCallback(() => {
+    item.favourite
+      ? unfavouriteMutationFn(item.favourite.id)
+      : favouriteMutationFn(item.id);
+  }, [favouriteMutationFn, item, unfavouriteMutationFn]);
+
+  const handleDelete = useCallback(() => {
     deleteMutationFn(item.id);
   }, [deleteMutationFn, item.id]);
+
+  console.log({ a: item.favourite });
 
   return (
     <View style={styles.overlay}>
       <Pressable
         style={styles.favorite}
         // onPress={() => setIsFavorited((prevState) => !prevState)}
-        onPress={handlePress}
+        onPress={handleFavourite}
       >
         <FontAwesome
-          name={isFavorited ? 'heart' : 'heart-o'}
+          name={item.favourite ? 'heart' : 'heart-o'}
           size={24}
           color="red"
         />
@@ -45,7 +57,7 @@ export const ImageOverlay = ({ item }: CardProps) => {
       <Pressable
         style={styles.favorite}
         // onPress={() => setIsFavorited((prevState) => !prevState)}
-        onPress={handlePress}
+        onPress={handleDelete}
       >
         <FontAwesome5 name="trash" size={24} color="black" />
       </Pressable>

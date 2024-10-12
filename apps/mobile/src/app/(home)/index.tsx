@@ -3,12 +3,16 @@ import { useCallback, useMemo } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
+import { useSelector } from 'react-redux';
 
 import { Card } from '../../components/Card';
+import { getEnhancedImageList } from '../../store/selectors/getEnhancedImageList';
 
 import {
+  ApiFavourite,
   ApiImage,
   ApiVote,
+  useGetMyFavouritesQuery,
   useGetMyImagesQuery,
   useGetMyVotesQuery,
 } from '../../store/services/CatApi';
@@ -26,21 +30,14 @@ const NoImagesFound = () => {
 };
 
 export type ImageListProps = {
+  favourites: ApiFavourite[];
   images: ApiImage[];
   votes: ApiVote[];
 };
 
-const ImageList = ({ images, votes }: ImageListProps) => {
+const ImageList = ({ favourites, images, votes }: ImageListProps) => {
   const { styles } = useStyles(stylesheet);
-
-  const imagesWithVotes = useMemo(() => {
-    return images.map((image) => {
-      return {
-        ...image,
-        votes: votes.filter((vote) => vote.image_id === image.id),
-      };
-    });
-  }, [images, votes]);
+  const memoizedImages = useSelector(getEnhancedImageList);
 
   return (
     <View style={styles.listContainer}>
@@ -48,7 +45,7 @@ const ImageList = ({ images, votes }: ImageListProps) => {
         <FlatList
           // style={styles.list}
           contentContainerStyle={styles.list}
-          data={imagesWithVotes}
+          data={memoizedImages}
           renderItem={({ item }) => <Card item={item} />}
           keyExtractor={(item) => item.id}
         />
@@ -60,24 +57,28 @@ const ImageList = ({ images, votes }: ImageListProps) => {
 const Home = () => {
   const { styles } = useStyles(stylesheet);
   const { data: images = [], refetch: refetchImages } = useGetMyImagesQuery({});
+  const { data: favourites = [], refetch: refetchFavourites } =
+    useGetMyFavouritesQuery();
   const { data: votes = [], refetch: refetchVotes } = useGetMyVotesQuery();
 
-  // console.log({ images, votes });
+  // console.log({ favourites, images, votes });
+  // console.log({ favourites });
 
   // Ensures that images and votes are refreshed when the screen is focused
-  useFocusEffect(
-    useCallback(() => {
-      refetchImages();
-      refetchVotes();
-    }, [refetchImages, refetchVotes])
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     refetchImages();
+  //     refetchFavourites();
+  //     refetchVotes();
+  //   }, [refetchFavourites, refetchImages, refetchVotes])
+  // );
 
   return (
     <View style={styles.container}>
       {images.length === 0 ? (
         <NoImagesFound />
       ) : (
-        <ImageList images={images} votes={votes} />
+        <ImageList favourites={favourites} images={images} votes={votes} />
       )}
     </View>
   );
