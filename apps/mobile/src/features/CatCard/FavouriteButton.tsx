@@ -24,7 +24,12 @@ export const FavouriteButton = ({ item }: CardProps) => {
       rounded
       disabled={isLoading}
       iconProps={{
-        name: item.favourite ? 'heart-fill' : 'heart',
+        name: 'heart',
+        size: 24,
+        color: 'red',
+      }}
+      activeIconProps={{
+        name: 'heart-fill',
         size: 24,
         color: 'red',
       }}

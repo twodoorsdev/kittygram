@@ -1,4 +1,5 @@
-import { FlatList, View } from 'react-native';
+import { View } from 'react-native';
+import Animated, { LinearTransition } from 'react-native-reanimated';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
 
 import { CatCard } from '../CatCard/CatCard';
@@ -11,8 +12,9 @@ export const ImageList = () => {
 
   return (
     <View style={styles.root}>
-      <FlatList
+      <Animated.FlatList
         // style={styles.list}
+        itemLayoutAnimation={LinearTransition}
         contentContainerStyle={styles.list}
         data={memoizedImages}
         renderItem={({ item }) => <CatCard item={item} />}
