@@ -11,19 +11,19 @@
   "apps": {
     "ios.debug": {
       "type": "ios.app",
-      "build": "cd ../../apps/mobile/ios && xcodebuild -workspace Mobile.xcworkspace -scheme Mobile -configuration Debug -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 15 Plus' -derivedDataPath ./build -quiet",
-      "binaryPath": "../../apps/mobile/ios/build/Build/Products/Debug-iphonesimulator/Mobile.app"
+      "build": "cd ../../apps/mobile/ios && xcodebuild -workspace KittyGram.xcworkspace -scheme KittyGram -configuration Debug -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 16' -derivedDataPath ./build -quiet",
+      "binaryPath": "../../apps/mobile/ios/build/Build/Products/Debug-iphonesimulator/KittyGram.app"
     },
     "ios.release": {
       "type": "ios.app",
-      "build": "cd ../../apps/mobile/ios && xcodebuild -workspace Mobile.xcworkspace -scheme Mobile -configuration Release -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 15 Plus' -derivedDataPath ./build -quiet",
-      "binaryPath": "../../apps/mobile/ios/build/Build/Products/Release-iphonesimulator/Mobile.app"
+      "build": "cd ../../apps/mobile/ios && xcodebuild -workspace KittyGram.xcworkspace -scheme KittyGram -configuration Release -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 16' -derivedDataPath ./build -quiet",
+      "binaryPath": "../../apps/mobile/ios/build/Build/Products/Release-iphonesimulator/KittyGram.app"
     },
 
     "ios.local": {
       "type": "ios.app",
-      "build": "bun nx run mobile:build --platform ios --profile preview --wait --local --no-interactive --output=../../apps/mobile/dist/Mobile.tar.gz",
-      "binaryPath": "../../apps/mobile/dist/Mobile.app"
+      "build": "bun nx run mobile:build --platform ios --profile preview --wait --local --no-interactive --output=../../apps/mobile/dist/KittyGram.tar.gz",
+      "binaryPath": "../../apps/mobile/dist/KittyGram.app"
     },
 
     "android.debug": {
@@ -39,8 +39,8 @@
 
     "android.local": {
       "type": "android.apk",
-      "build": "bun nx run mobile:build --platform android --profile preview --wait --local --no-interactive --output=../../apps/mobile/dist/Mobile.apk",
-      "binaryPath": "../../apps/mobile/dist/Mobile.apk"
+      "build": "bun nx run mobile:build --platform android --profile preview --wait --local --no-interactive --output=../../apps/mobile/dist/KittyGram.apk",
+      "binaryPath": "../../apps/mobile/dist/KittyGram.apk"
     }
   },
   "devices": {
