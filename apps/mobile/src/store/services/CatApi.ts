@@ -38,6 +38,13 @@ export type ApiFavourite = {
   image: Pick<ApiImage, 'id' | 'url'>;
 };
 
+const generateFileName = (uri: string) => {
+  const parts = uri.split('.');
+  const extension = parts[parts.length - 1];
+
+  return `IMG_${Date.now()}.${extension}`;
+};
+
 export const CatApi = createApi({
   reducerPath: 'catsApi',
   baseQuery: fetchBaseQuery({
@@ -77,11 +84,13 @@ export const CatApi = createApi({
 
         // This is a hack/trick (tr-hack? hatrick?) because React Native/Expo
         // Blob/File objects are FUBAR.
-        body.append('file', {
+        const rnBlob = {
           uri: image.uri,
-          type: image.type,
-          name: image.fileName,
-        } as unknown as Blob);
+          type: image.mimeType,
+          name: image.fileName ?? generateFileName(image.uri),
+        } as unknown as Blob;
+
+        body.append('file', rnBlob);
 
         return {
           url: 'images/upload',
