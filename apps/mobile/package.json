@@ -43,7 +43,8 @@
     "expo-image-picker": "*",
     "expo-image": "*",
     "redux-devtools-expo-dev-plugin": "*",
-    "@gorhom/bottom-sheet": "*"
+    "@gorhom/bottom-sheet": "*",
+    "ts-pattern": "*"
   },
   "scripts": {
     "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/mobile",

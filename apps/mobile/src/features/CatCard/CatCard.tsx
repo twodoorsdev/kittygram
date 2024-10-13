@@ -23,6 +23,8 @@ const stylesheet = createStyleSheet({
     width: '100%',
   },
   image: {
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
     width: '100%',
     height: 200,
     backgroundColor: 'white',

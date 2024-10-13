@@ -40,22 +40,14 @@ export const ImageOverlay = ({ item }: CardProps) => {
 
   return (
     <View style={styles.root}>
-      <Pressable
-        style={styles.favorite}
-        // onPress={() => setIsFavorited((prevState) => !prevState)}
-        onPress={handleFavourite}
-      >
+      <Pressable style={styles.favorite} onPress={handleFavourite}>
         <FontAwesome
           name={item.favourite ? 'heart' : 'heart-o'}
           size={24}
           color="red"
         />
       </Pressable>
-      <Pressable
-        style={styles.favorite}
-        // onPress={() => setIsFavorited((prevState) => !prevState)}
-        onPress={handleDelete}
-      >
+      <Pressable style={styles.favorite} onPress={handleDelete}>
         <FontAwesome5 name="trash" size={24} color="black" />
       </Pressable>
     </View>

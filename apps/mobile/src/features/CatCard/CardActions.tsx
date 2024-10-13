@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { Text, View } from 'react-native';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
+import { match, P } from 'ts-pattern';
 import {
   useDownvoteImageMutation,
   useUpvoteImageMutation,
@@ -46,24 +47,32 @@ export const CardActions = ({ item }: CardProps) => {
     const votes = item.votes || [];
     const scoreInteger = votes.reduce((acc, curr) => acc + curr.value, 0);
 
-    const scorePrefix =
-      scoreInteger === 0 ? '🐱' : scoreInteger > 0 ? '😼' : '😾';
+    const scorePrefix = match(scoreInteger)
+      .with(P.number.positive(), () => '😼')
+      .with(P.number.negative(), () => '😾')
+      .otherwise(() => '🐱');
     return `${scorePrefix} ${scoreInteger}`;
   }, [item.votes]);
 
   return (
-    <View style={styles.voteActions}>
-      <Text style={styles.voteCount}>{score}</Text>
-      <UpvoteButton item={item} />
-      <DownvoteButton item={item} />
+    <View style={styles.root}>
+      <View style={styles.inner}>
+        <UpvoteButton item={item} />
+        <Text style={styles.voteCount}>{score}</Text>
+        <DownvoteButton item={item} />
+      </View>
     </View>
   );
 };
 
 const stylesheet = createStyleSheet({
-  voteActions: {
+  root: {},
+  inner: {
+    backgroundColor: 'rgba(210, 210, 210, 0.8)',
     flexDirection: 'row',
     justifyContent: 'space-around',
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
   },
   voteCount: {
     alignSelf: 'center',

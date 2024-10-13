@@ -27,5 +27,7 @@ const stylesheet = createStyleSheet((theme) => ({
     width: '100%',
     height: '100%',
   },
-  list: {},
+  list: {
+    rowGap: 16,
+  },
 }));
