@@ -34,12 +34,16 @@ export const IconButton = ({
   const [toggled, setToggled] = useState(false);
   const handleTogglePressed = useCallback(
     (e: GestureResponderEvent) => {
+      if (props.disabled) {
+        return;
+      }
+
       setToggled(!toggled);
       if (onPress) {
         onPress(e);
       }
     },
-    [onPress, toggled]
+    [onPress, props.disabled, toggled]
   );
 
   const themedIconProps = {
