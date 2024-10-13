@@ -69,17 +69,17 @@ startAppListening({
   },
 });
 
-startAppListening({
-  matcher: CatApi.endpoints.upvoteImage.matchFulfilled,
-  effect: async (action, { dispatch }) => {
-    await dispatch(
-      showToast({
-        title: `🔼 ${TITLE_SUCCESS}`,
-        message: 'Your upvote was successful',
-      })
-    );
-  },
-});
+// startAppListening({
+//   matcher: CatApi.endpoints.upvoteImage.matchFulfilled,
+//   effect: async (action, { dispatch }) => {
+//     await dispatch(
+//       showToast({
+//         title: `🔼 ${TITLE_SUCCESS}`,
+//         message: 'Your upvote was successful',
+//       })
+//     );
+//   },
+// });
 
 startAppListening({
   matcher: CatApi.endpoints.upvoteImage.matchRejected,
@@ -96,17 +96,17 @@ startAppListening({
   },
 });
 
-startAppListening({
-  matcher: CatApi.endpoints.downvoteImage.matchFulfilled,
-  effect: async (action, { dispatch }) => {
-    await dispatch(
-      showToast({
-        title: `🔽 ${TITLE_SUCCESS}`,
-        message: 'Your downvote was successful',
-      })
-    );
-  },
-});
+// startAppListening({
+//   matcher: CatApi.endpoints.downvoteImage.matchFulfilled,
+//   effect: async (action, { dispatch }) => {
+//     await dispatch(
+//       showToast({
+//         title: `🔽 ${TITLE_SUCCESS}`,
+//         message: 'Your downvote was successful',
+//       })
+//     );
+//   },
+// });
 
 startAppListening({
   matcher: CatApi.endpoints.downvoteImage.matchRejected,
@@ -123,17 +123,17 @@ startAppListening({
   },
 });
 
-startAppListening({
-  matcher: CatApi.endpoints.favouriteImage.matchFulfilled,
-  effect: async (action, { dispatch }) => {
-    await dispatch(
-      showToast({
-        title: `❤️ ${TITLE_SUCCESS}`,
-        message: 'Favourited the kitty successfully',
-      })
-    );
-  },
-});
+// startAppListening({
+//   matcher: CatApi.endpoints.favouriteImage.matchFulfilled,
+//   effect: async (action, { dispatch }) => {
+//     await dispatch(
+//       showToast({
+//         title: `❤️ ${TITLE_SUCCESS}`,
+//         message: 'Favourited the kitty successfully',
+//       })
+//     );
+//   },
+// });
 
 startAppListening({
   matcher: CatApi.endpoints.favouriteImage.matchRejected,
@@ -150,17 +150,17 @@ startAppListening({
   },
 });
 
-startAppListening({
-  matcher: CatApi.endpoints.unfavouriteImage.matchFulfilled,
-  effect: async (action, { dispatch }) => {
-    await dispatch(
-      showToast({
-        title: `💔 ${TITLE_SUCCESS}`,
-        message: 'Image unfavourited successfully',
-      })
-    );
-  },
-});
+// startAppListening({
+//   matcher: CatApi.endpoints.unfavouriteImage.matchFulfilled,
+//   effect: async (action, { dispatch }) => {
+//     await dispatch(
+//       showToast({
+//         title: `💔 ${TITLE_SUCCESS}`,
+//         message: 'Image unfavourited successfully',
+//       })
+//     );
+//   },
+// });
 
 startAppListening({
   matcher: CatApi.endpoints.unfavouriteImage.matchRejected,
