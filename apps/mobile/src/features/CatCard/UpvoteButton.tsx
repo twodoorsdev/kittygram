@@ -4,8 +4,7 @@ import { useUpvoteImageMutation } from '../../store/services/CatApi';
 import { CardProps } from './shared';
 
 export const UpvoteButton = ({ item }: CardProps) => {
-  const [upvoteMutationFn, { data, error, isLoading }] =
-    useUpvoteImageMutation();
+  const [upvoteMutationFn, { isLoading }] = useUpvoteImageMutation();
 
   const handlePress = useCallback(() => {
     upvoteMutationFn(item.id);
@@ -13,6 +12,7 @@ export const UpvoteButton = ({ item }: CardProps) => {
 
   return (
     <IconButton
+      disabled={isLoading}
       iconProps={{ name: 'thumbsup', size: 24, color: 'green' }}
       onPress={handlePress}
     />

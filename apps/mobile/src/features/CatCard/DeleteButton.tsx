@@ -5,8 +5,7 @@ import { useDeleteImageMutation } from '../../store/services/CatApi';
 import { CardProps } from './shared';
 
 export const DeleteButton = ({ item }: CardProps) => {
-  const [deleteMutationFn, { isLoading, data, error }] =
-    useDeleteImageMutation();
+  const [deleteMutationFn, { isLoading }] = useDeleteImageMutation();
 
   const handleDelete = useCallback(() => {
     Alert.alert('Delete', 'Are you sure you want to delete this image?', [
@@ -24,6 +23,7 @@ export const DeleteButton = ({ item }: CardProps) => {
   return (
     <IconButton
       rounded
+      disabled={isLoading}
       iconProps={{ name: 'trash', size: 24, color: 'black' }}
       onPress={handleDelete}
     />

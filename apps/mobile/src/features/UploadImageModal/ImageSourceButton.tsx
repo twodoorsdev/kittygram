@@ -14,7 +14,7 @@ const upperCaseFirstLetter = (str: string) =>
 
 export const ImageSourceButton = ({ source }: InteractiveImageSourceProps) => {
   const dispatch = useAppDispatch();
-  const [uploadImageFn, { isLoading: isUpdating }] = useUploadImageMutation();
+  const [uploadImageFn, { isLoading }] = useUploadImageMutation();
 
   const thunk =
     source === 'camera' ? launchNativeCamera : launchNativePhotoPicker;
@@ -46,6 +46,7 @@ export const ImageSourceButton = ({ source }: InteractiveImageSourceProps) => {
 
   return (
     <ImageSource
+      disabled={isLoading}
       icon={icon}
       label={upperCaseFirstLetter(source)}
       onPress={handleSelectAndUpload}

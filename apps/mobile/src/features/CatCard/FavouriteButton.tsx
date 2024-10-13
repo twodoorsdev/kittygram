@@ -7,16 +7,22 @@ import {
 import { CardProps } from './shared';
 
 export const FavouriteButton = ({ item }: CardProps) => {
-  const [favouriteMutationFn] = useFavouriteImageMutation();
-  const [unfavouriteMutationFn] = useUnfavouriteImageMutation();
+  const [favouriteMutationFn, { isLoading: isFavouriteLoading }] =
+    useFavouriteImageMutation();
+  const [unfavouriteMutationFn, { isLoading: isUnfavouriteLoading }] =
+    useUnfavouriteImageMutation();
   const handleFavourite = useCallback(() => {
     item.favourite
       ? unfavouriteMutationFn(item.favourite.id)
       : favouriteMutationFn(item.id);
   }, [favouriteMutationFn, item, unfavouriteMutationFn]);
+
+  const isLoading = isFavouriteLoading || isUnfavouriteLoading;
+
   return (
     <IconButton
       rounded
+      disabled={isLoading}
       iconProps={{
         name: item.favourite ? 'heart-fill' : 'heart',
         size: 24,
