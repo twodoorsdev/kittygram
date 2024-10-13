@@ -1,15 +1,16 @@
 import * as ImagePicker from 'expo-image-picker';
 
 import { createAppAsyncThunk } from '../overrides';
+import { requestCameraPermission } from './requestCameraPermission';
 
 export const launchNativeCamera = createAppAsyncThunk(
   'photos/launchNativeCamera',
-  async () => {
+  async (_, { dispatch }) => {
+    // @ts-expect-error Thunk does not need any parameters
+    await dispatch(requestCameraPermission());
+
     return ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      // allowsEditing: true,
-      // aspect: [4, 3],/
-      // quality: 1,
     });
   }
 );

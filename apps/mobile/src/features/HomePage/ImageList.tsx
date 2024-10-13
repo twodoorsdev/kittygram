@@ -1,5 +1,4 @@
 import { FlatList, View } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
 
 import { CatCard } from '../CatCard/CatCard';
@@ -12,15 +11,13 @@ export const ImageList = () => {
 
   return (
     <View style={styles.root}>
-      <GestureHandlerRootView>
-        <FlatList
-          // style={styles.list}
-          contentContainerStyle={styles.list}
-          data={memoizedImages}
-          renderItem={({ item }) => <CatCard item={item} />}
-          keyExtractor={(item) => item.id}
-        />
-      </GestureHandlerRootView>
+      <FlatList
+        // style={styles.list}
+        contentContainerStyle={styles.list}
+        data={memoizedImages}
+        renderItem={({ item }) => <CatCard item={item} />}
+        keyExtractor={(item) => item.id}
+      />
     </View>
   );
 };

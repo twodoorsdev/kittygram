@@ -5,11 +5,7 @@ import { store } from '../store/store';
 const NavigationLayout = () => {
   return (
     <Stack>
-      <Stack.Screen name="(home)" options={{ headerShown: false }} />
-      <Stack.Screen
-        name="modal"
-        options={{ headerShown: false, presentation: 'modal' }}
-      />
+      <Stack.Screen name="index" options={{ title: 'KittyGram' }} />
     </Stack>
   );
 };

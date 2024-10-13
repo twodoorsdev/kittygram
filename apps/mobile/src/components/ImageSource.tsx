@@ -5,7 +5,7 @@ import { createStyleSheet, useStyles } from 'react-native-unistyles';
 
 export type ImageSourceProps = ComponentProps<typeof Pressable> & {
   icon: string;
-  label: string;
+  label?: string;
 };
 export const ImageSource = ({
   label,
@@ -18,7 +18,7 @@ export const ImageSource = ({
   return (
     <Pressable style={[styles.root, style as StyleProp<ViewStyle>]} {...props}>
       <FontAwesome5 name={icon} size={32} />
-      <Text>{label}</Text>
+      {label && <Text>{label}</Text>}
     </Pressable>
   );
 };
@@ -31,5 +31,6 @@ const stylesheet = createStyleSheet((theme) => ({
     borderStyle: 'dashed',
     borderWidth: 1,
     borderRadius: 10,
+    rowGap: 8,
   },
 }));
