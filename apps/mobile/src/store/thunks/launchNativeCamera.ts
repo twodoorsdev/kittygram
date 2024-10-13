@@ -6,7 +6,6 @@ import { requestCameraPermission } from './requestCameraPermission';
 export const launchNativeCamera = createAppAsyncThunk(
   'photos/launchNativeCamera',
   async (_, { dispatch }) => {
-    // @ts-expect-error Thunk does not need any parameters
     await dispatch(requestCameraPermission());
 
     return ImagePicker.launchCameraAsync({

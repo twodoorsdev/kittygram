@@ -22,7 +22,6 @@ export const ImageSourceButton = ({ source }: InteractiveImageSourceProps) => {
   const icon = source === 'camera' ? 'camera' : 'images';
 
   const handleSelectAndUpload = useCallback(async () => {
-    // @ts-expect-error Thunk does not need any parameters
     const response = await dispatch(thunk()).unwrap();
 
     // The user cancelled the picker

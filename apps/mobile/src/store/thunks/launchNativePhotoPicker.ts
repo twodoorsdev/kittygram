@@ -6,7 +6,6 @@ import { requestPhotoLibraryPermission } from './requestPhotoLibraryPermission';
 export const launchNativePhotoPicker = createAppAsyncThunk(
   'photos/launchNativePhotoPicker',
   async (_, { dispatch }) => {
-    // @ts-expect-error Thunk does not need any parameters
     await dispatch(requestPhotoLibraryPermission());
 
     return ImagePicker.launchImageLibraryAsync({
