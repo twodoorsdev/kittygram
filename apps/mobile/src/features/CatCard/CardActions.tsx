@@ -68,7 +68,7 @@ export const CardActions = ({ item }: CardProps) => {
 const stylesheet = createStyleSheet({
   root: {},
   inner: {
-    backgroundColor: 'rgba(210, 210, 210, 0.8)',
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
     flexDirection: 'row',
     justifyContent: 'space-around',
     borderBottomLeftRadius: 15,

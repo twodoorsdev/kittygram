@@ -62,8 +62,7 @@ const stylesheet = createStyleSheet({
   favorite: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white',
-    opacity: 0.5,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
     borderRadius: 100,
     margin: 8,
     padding: 16,
