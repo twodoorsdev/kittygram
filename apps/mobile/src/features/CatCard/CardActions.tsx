@@ -1,46 +1,12 @@
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { View } from 'react-native';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
 import { match, P } from 'ts-pattern';
 
 import { Text } from '../../components/Text';
-import {
-  useDownvoteImageMutation,
-  useUpvoteImageMutation,
-} from '../../store/services/CatApi';
+import { DownvoteButton } from './DownvoteButton';
 import { CardProps } from './shared';
-import { VoteButton } from './VoteButton';
-
-export const UpvoteButton = ({ item }: CardProps) => {
-  const [upvoteMutationFn, { data, error, isLoading }] =
-    useUpvoteImageMutation();
-
-  const handlePress = useCallback(() => {
-    upvoteMutationFn(item.id);
-  }, [item.id, upvoteMutationFn]);
-
-  return (
-    <VoteButton
-      iconProps={{ name: 'thumbs-o-up', size: 24, color: 'green' }}
-      onPress={handlePress}
-    />
-  );
-};
-
-export const DownvoteButton = ({ item }: CardProps) => {
-  const [downvoteMutationFn, { data, error, isLoading }] =
-    useDownvoteImageMutation();
-
-  const handlePress = useCallback(() => {
-    downvoteMutationFn(item.id);
-  }, [item.id, downvoteMutationFn]);
-  return (
-    <VoteButton
-      iconProps={{ name: 'thumbs-o-down', size: 24, color: 'red' }}
-      onPress={handlePress}
-    />
-  );
-};
+import { UpvoteButton } from './UpvoteButton';
 
 export const CardActions = ({ item }: CardProps) => {
   const { styles } = useStyles(stylesheet);
