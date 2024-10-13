@@ -44,7 +44,8 @@
     "expo-image": "*",
     "redux-devtools-expo-dev-plugin": "*",
     "@gorhom/bottom-sheet": "*",
-    "ts-pattern": "*"
+    "ts-pattern": "*",
+    "react-native-toast-message": "*"
   },
   "scripts": {
     "eas-build-post-install": "cd ../../ && node tools/scripts/eas-build-post-install.mjs . apps/mobile",

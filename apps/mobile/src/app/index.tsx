@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
 import { match, P } from 'ts-pattern';
 
@@ -27,7 +26,7 @@ const Home = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   return (
-    <GestureHandlerRootView style={styles.container}>
+    <View style={styles.container}>
       {match({ isLoading, images })
         .with({ isLoading: true, images: P.any }, () => (
           <ActivityIndicator size="large" color="blue" />
@@ -50,7 +49,7 @@ const Home = () => {
           setIsBottomSheetOpen(false);
         }}
       />
-    </GestureHandlerRootView>
+    </View>
   );
 };
 

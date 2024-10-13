@@ -1,6 +1,14 @@
 import { Stack } from 'expo-router/stack';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Toast from 'react-native-toast-message';
 import { Provider } from 'react-redux';
+import { CustomToast } from '../components/CustomToast';
 import { store } from '../store/store';
+
+const toastConfig = {
+  success: CustomToast,
+  error: CustomToast,
+};
 
 const NavigationLayout = () => {
   return (
@@ -12,9 +20,13 @@ const NavigationLayout = () => {
 
 const ProviderLayout = () => {
   return (
-    <Provider store={store}>
-      <NavigationLayout />
-    </Provider>
+    <GestureHandlerRootView>
+      <Provider store={store}>
+        <NavigationLayout />
+        <Toast config={toastConfig} />
+        {/*<Toast />*/}
+      </Provider>
+    </GestureHandlerRootView>
   );
 };
 

@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import devToolsEnhancer from 'redux-devtools-expo-dev-plugin';
+import { ToastMiddleware } from './middleware/ToastMiddleware';
 
 import { CatApi } from './services/CatApi';
 
@@ -10,9 +11,10 @@ export const store = configureStore({
       ? getDefaultEnhancers().concat(devToolsEnhancer())
       : getDefaultEnhancers(),
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(
-      CatApi.middleware
-    ) as unknown as ReturnType<typeof getDefaultMiddleware>;
+    type DefaultMiddleware = ReturnType<typeof getDefaultMiddleware>;
+    return getDefaultMiddleware()
+      .prepend(ToastMiddleware.middleware)
+      .concat(CatApi.middleware) as unknown as DefaultMiddleware;
   },
   reducer: {
     // RTK-Query reducers
