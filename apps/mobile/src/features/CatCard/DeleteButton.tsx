@@ -24,7 +24,7 @@ export const DeleteButton = ({ item }: CardProps) => {
     <IconButton
       rounded
       disabled={isLoading}
-      iconProps={{ name: 'trash', size: 24, color: 'black' }}
+      iconProps={{ name: 'trash', size: 24 }}
       onPress={handleDelete}
     />
   );

@@ -21,11 +21,16 @@ export const IconButton = ({
   style,
   ...props
 }: IconButtonProps) => {
-  const { styles } = useStyles(stylesheet, { rounded });
+  const { styles, theme } = useStyles(stylesheet, { rounded });
+
+  const themedIconProps = {
+    ...iconProps,
+    color: iconProps.color || theme.colors.typography.$5,
+  };
 
   return (
     <Pressable style={[styles.root, style as StyleProp<ViewStyle>]} {...props}>
-      <Octicons {...iconProps} />
+      <Octicons {...themedIconProps} />
     </Pressable>
   );
 };
