@@ -1,4 +1,4 @@
-import React, { ComponentProps, ReactNode } from 'react';
+import { ComponentProps, ReactNode, useEffect, useRef } from 'react';
 import RNBottomSheet, {
   BottomSheetView as RNBottomSheetView,
 } from '@gorhom/bottom-sheet';
@@ -19,12 +19,23 @@ export const BottomSheet = ({
 }: BottomSheetProps) => {
   const { styles } = useStyles(stylesheet);
 
+  const sheetRef = useRef<RNBottomSheet>(null);
+
+  useEffect(() => {
+    if (open) {
+      sheetRef.current?.expand();
+    } else {
+      sheetRef.current?.close();
+    }
+  }, [open]);
+
   return (
     <RNBottomSheet
+      ref={sheetRef}
       backgroundStyle={styles.root}
       // containerStyle={styles.root}
       enablePanDownToClose={true}
-      index={open ? 0 : -1}
+      index={-1}
       snapPoints={[200]}
       {...props}
     >

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
 import { match, P } from 'ts-pattern';
@@ -25,6 +25,14 @@ const Home = () => {
 
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
+  const handleUploadButtonPress = useCallback(() => {
+    setIsBottomSheetOpen(true);
+  }, []);
+
+  const handleBottomSheetClose = useCallback(() => {
+    setIsBottomSheetOpen(false);
+  }, []);
+
   return (
     <View style={styles.container}>
       {match({ isLoading, images })
@@ -37,17 +45,11 @@ const Home = () => {
         ))
         .exhaustive()}
       <View style={styles.overlay}>
-        <UploadButton
-          onPress={() => {
-            setIsBottomSheetOpen(true);
-          }}
-        />
+        <UploadButton onPress={handleUploadButtonPress} />
       </View>
       <UploadImageSheet
         open={isBottomSheetOpen}
-        onClose={() => {
-          setIsBottomSheetOpen(false);
-        }}
+        onClose={handleBottomSheetClose}
       />
     </View>
   );

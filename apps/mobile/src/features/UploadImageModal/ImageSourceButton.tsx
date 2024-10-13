@@ -1,3 +1,4 @@
+import { ImagePickerAsset } from 'expo-image-picker';
 import { useCallback } from 'react';
 import { ImageSource } from '../../components/ImageSource';
 import { useAppDispatch } from '../../store/overrides';
@@ -7,12 +8,18 @@ import { launchNativePhotoPicker } from '../../store/thunks/launchNativePhotoPic
 
 export type InteractiveImageSourceProps = {
   source: 'camera' | 'library';
+  onImageSelect?: (image: ImagePickerAsset) => void;
+  onComplete?: () => void;
 };
 
 const upperCaseFirstLetter = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1);
 
-export const ImageSourceButton = ({ source }: InteractiveImageSourceProps) => {
+export const ImageSourceButton = ({
+  source,
+  onImageSelect,
+  onComplete,
+}: InteractiveImageSourceProps) => {
   const dispatch = useAppDispatch();
   const [uploadImageFn, { isLoading }] = useUploadImageMutation();
 
@@ -41,8 +48,15 @@ export const ImageSourceButton = ({ source }: InteractiveImageSourceProps) => {
 
     const [firstImage] = response.assets;
 
+    if (onImageSelect) {
+      onImageSelect(firstImage);
+    }
+
     await uploadImageFn(firstImage).unwrap();
-  }, [dispatch, thunk, uploadImageFn]);
+    if (onComplete) {
+      onComplete();
+    }
+  }, [dispatch, onComplete, onImageSelect, thunk, uploadImageFn]);
 
   return (
     <ImageSource
