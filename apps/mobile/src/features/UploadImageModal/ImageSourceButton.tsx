@@ -25,6 +25,11 @@ export const ImageSourceButton = ({ source }: InteractiveImageSourceProps) => {
     // @ts-expect-error Thunk does not need any parameters
     const response = await dispatch(thunk()).unwrap();
 
+    // The user cancelled the picker
+    if (response.assets === null) {
+      return;
+    }
+
     if (!Array.isArray(response.assets)) {
       // @TODO Handle this better
       throw new Error('No images found');
