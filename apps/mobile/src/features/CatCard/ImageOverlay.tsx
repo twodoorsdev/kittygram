@@ -54,18 +54,18 @@ export const ImageOverlay = ({ item }: CardProps) => {
   );
 };
 
-const stylesheet = createStyleSheet({
+const stylesheet = createStyleSheet((theme) => ({
   root: {
     position: 'absolute',
     right: 0,
   },
   favorite: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    borderRadius: 100,
-    margin: 8,
-    padding: 16,
-    flex: 1,
+    backgroundColor: theme.colors.background.translucent,
+    borderRadius: theme.radii.circle,
+    margin: theme.space.$1,
+    padding: theme.space.$2,
   },
-});
+}));

@@ -21,6 +21,8 @@ export const BottomSheet = ({
 
   return (
     <RNBottomSheet
+      backgroundStyle={styles.root}
+      // containerStyle={styles.root}
       enablePanDownToClose={true}
       index={open ? 0 : -1}
       snapPoints={[200]}
@@ -35,7 +37,7 @@ export const BottomSheet = ({
 
 const stylesheet = createStyleSheet((theme, runtime) => ({
   root: {
-    flex: 1,
+    backgroundColor: theme.colors.background.$3,
   },
   content: {
     flex: 1,

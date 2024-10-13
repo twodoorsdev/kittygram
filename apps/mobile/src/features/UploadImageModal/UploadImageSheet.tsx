@@ -10,8 +10,8 @@ export type UploadImageSheetProps = ComponentProps<typeof BottomSheet>;
 export const UploadImageSheet = ({ open, onClose }: UploadImageSheetProps) => {
   const { styles } = useStyles(stylesheet);
   return (
-    <BottomSheet open={open} onClose={onClose}>
-      <View style={styles.root}>
+    <BottomSheet style={styles.root} open={open} onClose={onClose}>
+      <View style={styles.inner}>
         <ImageSourceButton source="camera" />
         <ImageSourceButton source="library" />
       </View>
@@ -21,9 +21,12 @@ export const UploadImageSheet = ({ open, onClose }: UploadImageSheetProps) => {
 
 const stylesheet = createStyleSheet((theme) => ({
   root: {
+    // backgroundColor: theme.colors.background.$3
+  },
+  inner: {
     flex: 1,
     flexDirection: 'row',
-    padding: 16,
-    columnGap: 16,
+    padding: theme.space.$2,
+    columnGap: theme.space.$2,
   },
 }));

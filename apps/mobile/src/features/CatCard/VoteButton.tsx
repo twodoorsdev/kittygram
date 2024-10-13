@@ -18,10 +18,10 @@ export const VoteButton = ({ style, iconProps, ...props }: VoteButtonProps) => {
   );
 };
 
-const stylesheet = createStyleSheet({
+const stylesheet = createStyleSheet((theme) => ({
   root: {
-    marginVertical: 8,
+    marginVertical: theme.space.$2,
     flexDirection: 'row',
-    columnGap: 8,
+    columnGap: theme.space.$2,
   },
-});
+}));

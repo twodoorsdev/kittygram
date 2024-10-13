@@ -1,7 +1,9 @@
 import { FontAwesome5 } from '@expo/vector-icons';
 import { ComponentProps } from 'react';
-import { Pressable, StyleProp, Text, ViewStyle } from 'react-native';
+import { Pressable, StyleProp, ViewStyle } from 'react-native';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
+
+import { Text } from './Text';
 
 export type ImageSourceProps = ComponentProps<typeof Pressable> & {
   icon: string;
@@ -28,9 +30,10 @@ const stylesheet = createStyleSheet((theme) => ({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: theme.colors.background.$5,
     borderStyle: 'dashed',
-    borderWidth: 1,
-    borderRadius: 10,
-    rowGap: 8,
+    borderWidth: theme.borderWidths.$1,
+    borderRadius: theme.radii.$2,
+    rowGap: theme.space.$2,
   },
 }));

@@ -24,10 +24,10 @@ export const ImageList = () => {
 
 const stylesheet = createStyleSheet((theme) => ({
   root: {
-    width: '100%',
-    height: '100%',
+    width: theme.space.full,
+    height: theme.space.full,
   },
   list: {
-    rowGap: 16,
+    rowGap: theme.space.$2,
   },
 }));

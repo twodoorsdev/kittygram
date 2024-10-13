@@ -22,12 +22,12 @@ const stylesheet = createStyleSheet((theme) => ({
     alignItems: 'center',
   },
   message: {
-    borderRadius: 15,
-    padding: 16,
-    backgroundColor: 'lightgrey',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    columnGap: 16,
-    flexDirection: 'row',
+    padding: theme.space.$2,
+    borderRadius: theme.radii.$3,
+    backgroundColor: theme.colors.background.$6,
+    columnGap: theme.space.$2,
   },
 }));

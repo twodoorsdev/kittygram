@@ -18,15 +18,18 @@ export const CatCard = ({ item }: CardProps) => {
   );
 };
 
-const stylesheet = createStyleSheet({
+const stylesheet = createStyleSheet((theme) => ({
   root: {
-    width: '100%',
+    borderColor: theme.colors.background.$6,
+    borderRadius: theme.radii.$3,
+    borderWidth: theme.borderWidths.$1,
+    width: theme.space.full,
   },
   image: {
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
-    width: '100%',
+    borderTopLeftRadius: theme.radii.$3,
+    borderTopRightRadius: theme.radii.$3,
+    width: theme.space.full,
     height: 200,
-    backgroundColor: 'white',
+    backgroundColor: theme.colors.background.$5,
   },
-});
+}));

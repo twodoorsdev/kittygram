@@ -56,7 +56,8 @@ const Home = () => {
 const stylesheet = createStyleSheet((theme, runtime) => ({
   container: {
     flex: 1,
-    padding: 16,
+    padding: theme.space.$2,
+    backgroundColor: theme.colors.background.$5,
   },
   overlay: {
     position: 'absolute',

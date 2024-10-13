@@ -1,7 +1,9 @@
 import { useCallback, useMemo } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
 import { match, P } from 'ts-pattern';
+
+import { Text } from '../../components/Text';
 import {
   useDownvoteImageMutation,
   useUpvoteImageMutation,
@@ -65,17 +67,17 @@ export const CardActions = ({ item }: CardProps) => {
   );
 };
 
-const stylesheet = createStyleSheet({
+const stylesheet = createStyleSheet((theme) => ({
   root: {},
   inner: {
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    backgroundColor: theme.colors.background.translucent,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    borderBottomLeftRadius: 15,
-    borderBottomRightRadius: 15,
+    borderBottomLeftRadius: theme.radii.$3,
+    borderBottomRightRadius: theme.radii.$3,
   },
   voteCount: {
     alignSelf: 'center',
-    fontSize: 20,
+    fontSize: theme.fontSizes.$3,
   },
-});
+}));
