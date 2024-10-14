@@ -1,7 +1,7 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { ComponentProps } from 'react';
-import { Pressable, StyleProp, View, ViewStyle } from 'react-native';
+import { Pressable, StyleProp, ViewStyle } from 'react-native';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
+import CatButton from './CatButton/CatButton';
 
 export type UploadButtonProps = ComponentProps<typeof Pressable>;
 
@@ -10,13 +10,7 @@ export const UploadButton = ({ style, ...props }: UploadButtonProps) => {
 
   return (
     <Pressable style={[styles.root, style as StyleProp<ViewStyle>]} {...props}>
-      <View>
-        <View style={styles.leftEar}></View>
-        <View style={styles.rightEar}></View>
-        <View style={styles.button}>
-          <FontAwesome size={28} name="camera" color="white" />
-        </View>
-      </View>
+      <CatButton onPress={props.onPress} />
     </Pressable>
   );
 };
