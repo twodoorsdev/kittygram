@@ -1,5 +1,7 @@
 # Kittygram
 
+![Demo](./assets/demo.gif)
+
 ## Tech Stack
 
 - [React Native](https://reactnative.dev/)
