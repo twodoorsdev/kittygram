@@ -1,0 +1,4 @@
+[tools]
+# specify single or multiple versions
+bun = '1.1.27'
+node = 'prefix:22'
