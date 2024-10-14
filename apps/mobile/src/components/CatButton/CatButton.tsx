@@ -17,10 +17,11 @@ import Animated, {
 import { useCallback, useEffect } from 'react';
 
 type CatButtonProps = {
+  animated?: boolean;
   onPress: ((event: GestureResponderEvent) => void) | null | undefined;
 };
 
-export const CatButton = ({ onPress }: CatButtonProps) => {
+export const CatButton = ({ animated, onPress }: CatButtonProps) => {
   const xVal = useSharedValue(-1);
   const yVal = useSharedValue(0);
   const blinkVal = useSharedValue(1);
@@ -93,8 +94,8 @@ export const CatButton = ({ onPress }: CatButtonProps) => {
   }, [blinkVal, boopVal, idle, onPress, xVal, yVal]);
 
   useEffect(() => {
-    idle();
-  }, [idle]);
+    animated && idle();
+  }, [animated, idle]);
 
   const noseStyle = useAnimatedStyle(() => {
     return {
@@ -145,8 +146,10 @@ export const CatButton = ({ onPress }: CatButtonProps) => {
     };
   });
 
+  const pressAction = animated ? boop : onPress;
+
   return (
-    <Pressable onPress={boop}>
+    <Pressable onPress={pressAction}>
       <View
         style={{
           flex: 1,

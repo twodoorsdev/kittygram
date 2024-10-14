@@ -47,7 +47,7 @@
     "simulator": {
       "type": "ios.simulator",
       "device": {
-        "type": "iPhone 15 Plus"
+        "type": "iPhone 16"
       }
     },
     "emulator": {

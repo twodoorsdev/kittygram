@@ -58,11 +58,14 @@ export const ImageSourceButton = ({
     }
   }, [dispatch, onComplete, onImageSelect, thunk, uploadImageFn]);
 
+  const displaySource = upperCaseFirstLetter(source);
+
   return (
     <ImageSource
+      testID={`Sheet<Upload>.${displaySource}`}
       disabled={isLoading}
       icon={icon}
-      label={upperCaseFirstLetter(source)}
+      label={displaySource}
       onPress={handleSelectAndUpload}
     />
   );

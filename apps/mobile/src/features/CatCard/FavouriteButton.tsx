@@ -6,6 +6,9 @@ import {
 } from '../../store/services/CatApi';
 import { CardProps } from './shared';
 
+const getTestId = (isFavourite: boolean, id: string) =>
+  `Card.Button<${isFavourite ? 'Unfavourite' : 'Favourite'}>.${id}`;
+
 export const FavouriteButton = ({ item }: CardProps) => {
   const [favouriteMutationFn, { isLoading: isFavouriteLoading }] =
     useFavouriteImageMutation();
@@ -21,6 +24,7 @@ export const FavouriteButton = ({ item }: CardProps) => {
 
   return (
     <IconButton
+      testID={getTestId(Boolean(item.favourite), item.id)}
       rounded
       disabled={isLoading}
       iconProps={{

@@ -11,6 +11,7 @@ export const DownvoteButton = ({ item }: CardProps) => {
   }, [item.id, downvoteMutationFn]);
   return (
     <IconButton
+      testID={`Card.Button<Downvote>.${item.id}`}
       disabled={isLoading}
       iconProps={{ name: 'thumbsdown', size: 24, color: 'red' }}
       onPress={handlePress}

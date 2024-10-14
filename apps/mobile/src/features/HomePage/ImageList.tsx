@@ -13,6 +13,7 @@ export const ImageList = () => {
   return (
     <View style={styles.root}>
       <Animated.FlatList
+        testID={`List<CatCard>`}
         // style={styles.list}
         itemLayoutAnimation={LinearTransition}
         contentContainerStyle={styles.list}

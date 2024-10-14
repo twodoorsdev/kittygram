@@ -12,6 +12,7 @@ export const UpvoteButton = ({ item }: CardProps) => {
 
   return (
     <IconButton
+      testID={`Card.Button<Upvote>.${item.id}`}
       disabled={isLoading}
       iconProps={{ name: 'thumbsup', size: 24, color: 'green' }}
       onPress={handlePress}

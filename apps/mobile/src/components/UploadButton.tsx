@@ -3,6 +3,8 @@ import { Pressable, StyleProp, ViewStyle } from 'react-native';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
 import { CatButton } from './CatButton/CatButton';
 
+const isTestMode = (process.env.EXPO_PUBLIC_TEST_MODE ?? 'false') === 'true';
+
 export type UploadButtonProps = ComponentProps<typeof Pressable>;
 
 export const UploadButton = ({ style, ...props }: UploadButtonProps) => {
@@ -10,7 +12,8 @@ export const UploadButton = ({ style, ...props }: UploadButtonProps) => {
 
   return (
     <Pressable style={[styles.root, style as StyleProp<ViewStyle>]} {...props}>
-      <CatButton onPress={props.onPress} />
+      {/* Don't animate in test mode because it causes Detox to hang */}
+      <CatButton animated={!isTestMode} onPress={props.onPress} />
     </Pressable>
   );
 };

@@ -14,7 +14,7 @@ export const DeleteButton = ({ item }: CardProps) => {
         style: 'cancel',
       },
       {
-        text: 'Delete',
+        text: 'Confirm',
         onPress: () => deleteMutationFn(item.id),
       },
     ]);
@@ -22,6 +22,7 @@ export const DeleteButton = ({ item }: CardProps) => {
 
   return (
     <IconButton
+      testID={`Card.Button<Delete>.${item.id}`}
       rounded
       disabled={isLoading}
       iconProps={{ name: 'trash', size: 24 }}

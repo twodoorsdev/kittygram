@@ -9,7 +9,7 @@ export const CatCard = ({ item }: CardProps) => {
   const { styles } = useStyles(stylesheet);
 
   return (
-    <View style={styles.root}>
+    <View style={styles.root} testID={`Card.${item.id}`}>
       <Image style={styles.image} source={item.url} />
       <ImageOverlay item={item} />
 

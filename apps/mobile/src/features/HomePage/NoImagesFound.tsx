@@ -5,7 +5,7 @@ import { createStyleSheet, useStyles } from 'react-native-unistyles';
 export const NoImagesFound = () => {
   const { styles } = useStyles(stylesheet);
   return (
-    <View style={styles.root}>
+    <View style={styles.root} testID={`NoData<CatCard>`}>
       <View style={styles.message}>
         <FontAwesome name="warning" size={24} color="grey" />
         <Text>No images found</Text>
