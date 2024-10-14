@@ -1,6 +1,6 @@
-import * as React from "react"
-import Svg, { SvgProps, Path } from "react-native-svg"
-import { memo } from "react"
+import * as React from 'react';
+import Svg, { SvgProps, Path } from 'react-native-svg';
+import { memo } from 'react';
 const SvgComponent = (props: SvgProps & { secondaryColor: string }) => (
   <Svg width={115} height={149} fill="none" {...props}>
     <Path
@@ -13,5 +13,5 @@ const SvgComponent = (props: SvgProps & { secondaryColor: string }) => (
     />
   </Svg>
 );
-const Memo = memo(SvgComponent)
-export { Memo as CatEarL }
+const Memo = memo(SvgComponent);
+export { Memo as CatEarL };

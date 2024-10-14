@@ -7,18 +7,20 @@ import { GestureResponderEvent, Pressable, View } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
-  useSharedValue, withDelay,
+  useSharedValue,
+  withDelay,
   withRepeat,
-  withSequence, withSpring, withTiming
+  withSequence,
+  withSpring,
+  withTiming,
 } from 'react-native-reanimated';
 import { useCallback, useEffect } from 'react';
 
 type CatButtonProps = {
   onPress: ((event: GestureResponderEvent) => void) | null | undefined;
-}
+};
 
-const CatButton = ({ onPress }: CatButtonProps) => {
-
+export const CatButton = ({ onPress }: CatButtonProps) => {
   const xVal = useSharedValue(-1);
   const yVal = useSharedValue(0);
   const blinkVal = useSharedValue(1);
@@ -28,19 +30,31 @@ const CatButton = ({ onPress }: CatButtonProps) => {
     'worklet';
     xVal.value = withRepeat(
       withSequence(
-        withDelay(2000 + Math.random() * 2000, withSpring(-1 + Math.random() * 2)),
+        withDelay(
+          2000 + Math.random() * 2000,
+          withSpring(-1 + Math.random() * 2)
+        ),
         withDelay(2000 + Math.random() * 3000, withSpring(0)),
-        withDelay(2000 + Math.random() * 2000, withSpring(-1 + Math.random() * 2)),
-        withDelay(2000 + Math.random() * 3000, withSpring(0)),
+        withDelay(
+          2000 + Math.random() * 2000,
+          withSpring(-1 + Math.random() * 2)
+        ),
+        withDelay(2000 + Math.random() * 3000, withSpring(0))
       ),
       0
     );
     yVal.value = withRepeat(
       withSequence(
-        withDelay(2000 + Math.random() * 3000, withSpring(-1 + Math.random() * 2)),
+        withDelay(
+          2000 + Math.random() * 3000,
+          withSpring(-1 + Math.random() * 2)
+        ),
         withDelay(2000 + Math.random() * 3000, withSpring(0)),
-        withDelay(2000 + Math.random() * 3000, withSpring(-1 + Math.random() * 2)),
-        withDelay(2000 + Math.random() * 3000, withSpring(0)),
+        withDelay(
+          2000 + Math.random() * 3000,
+          withSpring(-1 + Math.random() * 2)
+        ),
+        withDelay(2000 + Math.random() * 3000, withSpring(0))
       ),
       0
     );
@@ -53,10 +67,10 @@ const CatButton = ({ onPress }: CatButtonProps) => {
         withDelay(1000, withSpring(0.9)),
         withTiming(0, { duration: 50 }),
         withTiming(1, { duration: 100 }),
-        withDelay(2000, withSpring(0.8)),
+        withDelay(2000, withSpring(0.8))
       ),
       0
-    )
+    );
   }, [blinkVal, xVal, yVal]);
 
   const boop = useCallback(() => {
@@ -67,17 +81,16 @@ const CatButton = ({ onPress }: CatButtonProps) => {
     blinkVal.value = withTiming(0.2);
     boopVal.value = withSequence(
       withTiming(1, { duration: 50 }),
-      withTiming(0, { duration: 50 }),
+      withTiming(0, { duration: 50 })
     );
 
     setTimeout(() => {
       idle();
       if (onPress) {
-        // @ts-ignore
-        onPress();
+        onPress({} as GestureResponderEvent);
       }
     }, 400);
-  }, [blinkVal, idle, xVal, yVal])
+  }, [blinkVal, boopVal, idle, onPress, xVal, yVal]);
 
   useEffect(() => {
     idle();
@@ -87,9 +100,9 @@ const CatButton = ({ onPress }: CatButtonProps) => {
     return {
       transform: [
         { translateY: interpolate(yVal.value, [-1, 1], [20, -20]) },
-        { translateX: interpolate(xVal.value, [-1, 1], [-50, 30]) }
-      ]
-    }
+        { translateX: interpolate(xVal.value, [-1, 1], [-50, 30]) },
+      ],
+    };
   });
 
   const leftEyeStyle = useAnimatedStyle(() => {
@@ -97,9 +110,9 @@ const CatButton = ({ onPress }: CatButtonProps) => {
       transform: [
         { translateY: interpolate(yVal.value, [-1, 1], [-30, -50]) },
         { translateX: interpolate(xVal.value, [-1, 1], [-100, -60]) },
-        { scaleY: interpolate(blinkVal.value, [0, 1], [0, 1]) }
-      ]
-    }
+        { scaleY: interpolate(blinkVal.value, [0, 1], [0, 1]) },
+      ],
+    };
   });
 
   const rightEyeStyle = useAnimatedStyle(() => {
@@ -107,9 +120,9 @@ const CatButton = ({ onPress }: CatButtonProps) => {
       transform: [
         { translateY: interpolate(yVal.value, [-1, 1], [-30, -50]) },
         { translateX: interpolate(xVal.value, [-1, 1], [60, 100]) },
-        { scaleY: interpolate(blinkVal.value, [0, 1], [0, 1]) }
-      ]
-    }
+        { scaleY: interpolate(blinkVal.value, [0, 1], [0, 1]) },
+      ],
+    };
   });
 
   const leftEarStyle = useAnimatedStyle(() => {
@@ -117,9 +130,9 @@ const CatButton = ({ onPress }: CatButtonProps) => {
       transform: [
         { translateX: -160 },
         { translateY: interpolate(yVal.value, [-1, 1], [-160, -140]) },
-        { scale: interpolate(xVal.value, [-1, 1], [0.95, 1.05]) }
-      ]
-    }
+        { scale: interpolate(xVal.value, [-1, 1], [0.95, 1.05]) },
+      ],
+    };
   });
 
   const rightEarStyle = useAnimatedStyle(() => {
@@ -127,39 +140,78 @@ const CatButton = ({ onPress }: CatButtonProps) => {
       transform: [
         { translateX: 60 },
         { translateY: interpolate(yVal.value, [-1, 1], [-160, -140]) },
-        { scale: interpolate(xVal.value, [-1, 1], [1.05, 0.95]) }
-      ]
-    }
+        { scale: interpolate(xVal.value, [-1, 1], [1.05, 0.95]) },
+      ],
+    };
   });
 
   return (
     <Pressable onPress={boop}>
-      <View style={{ flex: 1, transform: [ { scale: 0.5 }], shadowOpacity: 1, shadowRadius: 10, shadowColor: '#000' }}>
-
+      <View
+        style={{
+          flex: 1,
+          transform: [{ scale: 0.5 }],
+          shadowOpacity: 1,
+          shadowRadius: 10,
+          shadowColor: '#000',
+        }}
+      >
         <Animated.View style={[leftEarStyle, { position: 'absolute' }]}>
-          <CatEarL stroke={'#444'} strokeWidth={5} color={'#000'} secondaryColor={'#fff'} />
+          <CatEarL
+            stroke={'#444'}
+            strokeWidth={5}
+            color={'#000'}
+            secondaryColor={'#fff'}
+          />
         </Animated.View>
 
         <Animated.View style={[rightEarStyle, { position: 'absolute' }]}>
-          <CatEarR stroke={'#444'} strokeWidth={5} color={'#000'} secondaryColor={'#fff'} />
+          <CatEarR
+            stroke={'#444'}
+            strokeWidth={5}
+            color={'#000'}
+            secondaryColor={'#fff'}
+          />
         </Animated.View>
 
-        <CatHead stroke={'#777'} strokeWidth={5} color={'#000'} style={{ position: 'absolute', transform: [ { translateX: -140 }, { translateY: -100 }]}}/>
+        <CatHead
+          stroke={'#777'}
+          strokeWidth={5}
+          color={'#000'}
+          style={{
+            position: 'absolute',
+            transform: [{ translateX: -140 }, { translateY: -100 }],
+          }}
+        />
 
         <Animated.View style={[noseStyle, { position: 'absolute' }]}>
           <CatNose color={'#fff'} />
         </Animated.View>
 
-        <Animated.View  style={[leftEyeStyle, { position: 'absolute', transform: [ { translateX: -80 }, { translateY: -50 }]}]}>
+        <Animated.View
+          style={[
+            leftEyeStyle,
+            {
+              position: 'absolute',
+              transform: [{ translateX: -80 }, { translateY: -50 }],
+            },
+          ]}
+        >
           <CatEye color={'#fff'} />
         </Animated.View>
 
-        <Animated.View style={[rightEyeStyle, { position: 'absolute', transform: [ { translateX: 80 }, { translateY: -40 }]}]}>
+        <Animated.View
+          style={[
+            rightEyeStyle,
+            {
+              position: 'absolute',
+              transform: [{ translateX: 80 }, { translateY: -40 }],
+            },
+          ]}
+        >
           <CatEye color={'#fff'} />
         </Animated.View>
       </View>
     </Pressable>
-  )
-}
-
-export default CatButton;
+  );
+};

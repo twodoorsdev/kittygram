@@ -1,12 +1,17 @@
 import { useCallback, useState } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { View } from 'react-native';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
 import { match, P } from 'ts-pattern';
+import { ActivityIndicator } from '../components/ActivityIndicator';
 
 import { UploadButton } from '../components/UploadButton';
+import { CatCardSkeleton } from '../features/CatCard/CatCardSkeleton';
 import { ImageList } from '../features/HomePage/ImageList';
+import { ImageListWrapper } from '../features/HomePage/ImageListWrapper';
 import { NoImagesFound } from '../features/HomePage/NoImagesFound';
 import { UploadImageSheet } from '../features/UploadImageModal/UploadImageSheet';
+import { useAppSelector } from '../store/overrides';
+import { getIsImageUploading } from '../store/selectors/getIsImageUploading';
 import {
   useGetMyFavouritesQuery,
   useGetMyImagesQuery,
@@ -20,29 +25,65 @@ const Home = () => {
   );
   const { isLoading: isFavouritesLoading } = useGetMyFavouritesQuery();
   const { isLoading: isVotesLoading } = useGetMyVotesQuery();
-
-  const isLoading = isImagesLoading || isFavouritesLoading || isVotesLoading;
-
+  const isImageUploading = useAppSelector(getIsImageUploading);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   const handleUploadButtonPress = useCallback(() => {
     setIsBottomSheetOpen(true);
   }, []);
-
   const handleBottomSheetClose = useCallback(() => {
     setIsBottomSheetOpen(false);
   }, []);
 
+  const isLoading = isImagesLoading || isFavouritesLoading || isVotesLoading;
+
   return (
     <View style={styles.container}>
-      {match({ isLoading, images })
+      {match({ isLoading, isImageUploading, images })
         .with({ isLoading: true, images: P.any }, () => (
-          <ActivityIndicator size="large" color="blue" />
+          <ActivityIndicator expand size="large" />
         ))
-        .with({ isLoading: false, images: [] }, () => <NoImagesFound />)
-        .with({ isLoading: false, images: [P.any, ...P.array()] }, () => (
-          <ImageList />
+        .with({ isLoading: false, isImageUploading: false, images: [] }, () => (
+          <NoImagesFound />
         ))
+        .with(
+          {
+            isLoading: false,
+            isImageUploading: true,
+            images: [],
+          },
+          () => (
+            <ImageListWrapper>
+              <CatCardSkeleton />
+              <ImageList />
+            </ImageListWrapper>
+          )
+        )
+        .with(
+          {
+            isLoading: false,
+            isImageUploading: false,
+            images: [P.any, ...P.array()],
+          },
+          () => (
+            <ImageListWrapper>
+              <ImageList />
+            </ImageListWrapper>
+          )
+        )
+        .with(
+          {
+            isLoading: false,
+            isImageUploading: true,
+            images: [P.any, ...P.array()],
+          },
+          () => (
+            <ImageListWrapper>
+              <CatCardSkeleton />
+              <ImageList />
+            </ImageListWrapper>
+          )
+        )
         .exhaustive()}
       <View style={styles.overlay}>
         <UploadButton onPress={handleUploadButtonPress} />

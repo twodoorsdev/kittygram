@@ -1,7 +1,7 @@
 import { ComponentProps } from 'react';
 import { Pressable, StyleProp, ViewStyle } from 'react-native';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
-import CatButton from './CatButton/CatButton';
+import { CatButton } from './CatButton/CatButton';
 
 export type UploadButtonProps = ComponentProps<typeof Pressable>;
 

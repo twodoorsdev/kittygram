@@ -1,6 +1,6 @@
-import * as React from "react"
-import Svg, { SvgProps, Path } from "react-native-svg"
-import { memo } from "react"
+import * as React from 'react';
+import Svg, { SvgProps, Path } from 'react-native-svg';
+import { memo } from 'react';
 const SvgComponent = (props: SvgProps) => (
   <Svg width={189} height={116} fill="none" {...props}>
     <Path
@@ -9,5 +9,5 @@ const SvgComponent = (props: SvgProps) => (
     />
   </Svg>
 );
-const Memo = memo(SvgComponent)
-export { Memo as CatSnout }
+const Memo = memo(SvgComponent);
+export { Memo as CatSnout };

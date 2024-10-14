@@ -4,6 +4,7 @@ import devToolsEnhancer from 'redux-devtools-expo-dev-plugin';
 import { ToastMiddleware } from './middleware/ToastMiddleware';
 
 import { CatApi } from './services/CatApi';
+import { ImageActivitySlice } from './slices/ImageActivitySlice';
 
 export const store = configureStore({
   enhancers: (getDefaultEnhancers) =>
@@ -19,6 +20,8 @@ export const store = configureStore({
   reducer: {
     // RTK-Query reducers
     [CatApi.reducerPath]: CatApi.reducer,
+    // RTK slices
+    [ImageActivitySlice.name]: ImageActivitySlice.reducer,
   },
 });
 

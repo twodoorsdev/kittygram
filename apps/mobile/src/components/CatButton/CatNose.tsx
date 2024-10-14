@@ -1,11 +1,10 @@
-import * as React from "react"
-import Svg, { SvgProps, Path } from "react-native-svg"
+import * as React from 'react';
+import Svg, { SvgProps, Path } from 'react-native-svg';
 import { memo } from 'react';
 import Animated from 'react-native-reanimated';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 const SvgComponent = (props: SvgProps) => {
-
   return (
     <Svg width={51} height={32} fill="none" {...props}>
       <AnimatedPath
@@ -14,8 +13,7 @@ const SvgComponent = (props: SvgProps) => {
       />
     </Svg>
   );
-
-}
+};
 
 const Memo = memo(SvgComponent);
-export { Memo as CatNose }
+export { Memo as CatNose };
